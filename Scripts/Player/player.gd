@@ -1,0 +1,122 @@
+extends Node2D
+
+
+
+	
+var elbow1:Vector2
+var elbow2:Vector2
+
+@export var SPEED = 500.0
+@export var JUMP_VELOCITY = -400.0
+
+
+var limb_length = 150.0
+var bend_sign = 0
+
+var TagetPosOffset:Vector2
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	TagetPosOffset = $LegTargetPos.position
+	
+	pass # Replace with function body.
+
+func _physics_process(delta):
+	print($Body.is_on_floor())
+	print($Body.get_gravity())
+	
+	# Add the gravity.
+	if not $Body.is_on_floor():
+		$Body.velocity += $Body.get_gravity() * delta
+		
+	if Input.is_action_just_pressed("ui_accept") and $Body.is_on_floor():
+		$Body.velocity.y = JUMP_VELOCITY
+		
+	$Body.velocity.x = SPEED
+	$Body.move_and_slide()
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	
+	if limb_length + limb_length < $Foot1.position.distance_to($Body.position):
+		$LegLerpPos.position = $LegTargetPos.position
+		pass
+	if limb_length + limb_length < $Foot2.position.distance_to($Body.position):
+		$LegLerpPos2.position = $LegTargetPos.position
+		pass
+	$Foot1.position = lerp($Foot1.position, $LegLerpPos.position, 10*delta)
+	$Foot2.position = lerp($Foot2.position, $LegLerpPos2.position, 10*delta)
+	
+	
+
+	$LegTargetPos.position = Vector2($Body.position.x + TagetPosOffset.x, $Body.position.y + TagetPosOffset.y)
+	
+	#$Body.position = get_global_mouse_position()
+	
+	#$Body.position.y = lerp($Body.position.y-2, $LegTargetPos.position.y, 5*delta)
+	
+	elbow1 = $Body.position + magic_IK_Function(limb_length, limb_length, $Foot1.position-$Body.position, -1.0)
+	elbow2 = $Body.position + magic_IK_Function(limb_length, limb_length, $Foot2.position-$Body.position, -1.0)
+	queue_redraw()
+	
+	
+	#rotate sprites feet2
+	var lowerAngleFoot2 = (elbow2 - $Foot2.position).angle()
+	$Foot2/Sprite2D.rotation = PI/2+lowerAngleFoot2
+	
+	var upperAngleFoot2 = ($Body.position - elbow2).angle()
+	$FootUp2.position = elbow2
+	$FootUp2/Sprite2D.rotation = PI/2+upperAngleFoot2
+	
+	
+	#rotate sprites feets1
+	var lowerAngleFoot1 = (elbow1 - $Foot1.position).angle()
+	$Foot1/Sprite2D.rotation = PI/2+lowerAngleFoot1
+	
+	var upperAngleFoot1 = ($Body.position - elbow1).angle()
+	$FootUp1.position = elbow1
+	$FootUp1/Sprite2D.rotation = PI/2+upperAngleFoot1
+
+	
+	pass
+	
+
+func _draw() -> void:
+	draw_lerp_free()
+
+func draw_lerp_free():
+	var body_pos = $Body.position
+	# limb lines
+	#draw_line(body_pos, elbow1, Color.YELLOW, 2.0)
+	#draw_line(elbow1, $Foot1.position, Color.YELLOW, 2.0)
+	
+	#draw_line(body_pos, elbow2, Color.YELLOW, 2.0)
+	#draw_line(elbow2, $Foot2.position, Color.YELLOW, 2.0)
+	
+	# feet
+	#draw_circle($Foot1.position, 25.0, Color.WHITE)
+	#draw_circle($Foot2.position, 25.0, Color.WHITE)
+	# body
+	#draw_circle(body_pos, 50.0, Color.WHITE)
+	# target step
+	#draw_circle(target_step, 20.0, Color.YELLOW)
+
+
+
+func magic_IK_Function(l1:float, l2:float, local_end_affector:Vector2, elbow_direction_sign:int) -> Vector2:
+	
+	var numerator:float = l1 * l1 + local_end_affector.x * local_end_affector.x + local_end_affector.y * local_end_affector.y - l2 * l2
+	var denominator:float = 2* l1 * sqrt(local_end_affector.x * local_end_affector.x + local_end_affector.y * local_end_affector.y)
+	var elbow_angle_relative = acos(numerator/denominator)
+	
+	# NaN check
+	if elbow_angle_relative != elbow_angle_relative:
+		elbow_angle_relative = 0.0
+	
+	if elbow_direction_sign == 0:
+		elbow_direction_sign = 1
+		
+	var angle = elbow_direction_sign * elbow_angle_relative + local_end_affector.angle()
+	return Vector2(cos(angle), sin(angle)) * l1
+	

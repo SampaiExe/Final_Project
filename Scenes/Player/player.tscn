@@ -1,0 +1,99 @@
+[gd_scene load_steps=5 format=3 uid="uid://sqhyarub2ybi"]
+
+[ext_resource type="Script" uid="uid://c43cxej6lfxp7" path="res://Scripts/Player/player.gd" id="1_uvnfx"]
+[ext_resource type="Texture2D" uid="uid://cpbides33mcu2" path="res://icon.svg" id="2_a3d8c"]
+[ext_resource type="Texture2D" uid="uid://bpg8didr7oick" path="res://Assets/Deer Sprite-Sheet.png" id="3_xpcdj"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xpcdj"]
+height = 61.199997
+
+[node name="Player" type="Node2D"]
+script = ExtResource("1_uvnfx")
+
+[node name="LegTargetPos" type="Marker2D" parent="."]
+position = Vector2(268.26, 234.82)
+
+[node name="Sprite2D" type="Sprite2D" parent="LegTargetPos"]
+scale = Vector2(0.18749997, 0.14843744)
+texture = ExtResource("2_a3d8c")
+
+[node name="LegLerpPos" type="Marker2D" parent="."]
+visible = false
+position = Vector2(110.795, 187)
+
+[node name="Sprite2D" type="Sprite2D" parent="LegLerpPos"]
+modulate = Color(0.6189569, 0, 0.31415492, 1)
+scale = Vector2(0.6969141, 0.6523437)
+texture = ExtResource("2_a3d8c")
+
+[node name="LegLerpPos2" type="Marker2D" parent="."]
+visible = false
+position = Vector2(-110, 183)
+
+[node name="Sprite2D" type="Sprite2D" parent="LegLerpPos2"]
+modulate = Color(0.6189569, 0, 0.31415492, 1)
+scale = Vector2(0.6969141, 0.6523437)
+texture = ExtResource("2_a3d8c")
+
+[node name="Foot1" type="Marker2D" parent="."]
+position = Vector2(3.0000076, 152)
+
+[node name="Sprite2D" type="Sprite2D" parent="Foot1"]
+texture_filter = 1
+scale = Vector2(9.28, 9.28)
+texture = ExtResource("3_xpcdj")
+offset = Vector2(17.815, -26.44)
+hframes = 17
+frame = 2
+
+[node name="FootUp1" type="Marker2D" parent="."]
+position = Vector2(3.0000076, 152)
+
+[node name="Sprite2D" type="Sprite2D" parent="FootUp1"]
+texture_filter = 1
+scale = Vector2(9.28, 9.28)
+texture = ExtResource("3_xpcdj")
+offset = Vector2(20.49, -26.44)
+hframes = 17
+frame = 2
+
+[node name="Foot2" type="Marker2D" parent="."]
+position = Vector2(3.0000076, 152)
+
+[node name="Sprite2D" type="Sprite2D" parent="Foot2"]
+texture_filter = 1
+scale = Vector2(9.28, 9.28)
+texture = ExtResource("3_xpcdj")
+offset = Vector2(17.815, -26.44)
+hframes = 17
+frame = 2
+
+[node name="FootUp2" type="Marker2D" parent="."]
+position = Vector2(50.23, 54.51)
+
+[node name="Sprite2D" type="Sprite2D" parent="FootUp2"]
+texture_filter = 1
+scale = Vector2(9.28, 9.28)
+texture = ExtResource("3_xpcdj")
+offset = Vector2(20.49, -26.44)
+hframes = 17
+frame = 2
+
+[node name="Body" type="CharacterBody2D" parent="."]
+texture_filter = 1
+scale = Vector2(5, 5)
+
+[node name="Sprite2D" type="Sprite2D" parent="Body"]
+position = Vector2(-10.455, -7.79)
+scale = Vector2(2.226, 2.355)
+texture = ExtResource("3_xpcdj")
+hframes = 17
+
+[node name="Camera2D" type="Camera2D" parent="Body"]
+position = Vector2(47.99997, 24.600006)
+scale = Vector2(2.7234044, 3.1219513)
+zoom = Vector2(0.295, 0.295)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+position = Vector2(-0.20000225, 11.4)
+shape = SubResource("CapsuleShape2D_xpcdj")
