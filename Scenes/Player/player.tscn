@@ -1,11 +1,51 @@
-[gd_scene load_steps=5 format=3 uid="uid://sqhyarub2ybi"]
+[gd_scene load_steps=10 format=3 uid="uid://sqhyarub2ybi"]
 
 [ext_resource type="Script" uid="uid://c43cxej6lfxp7" path="res://Scripts/Player/player.gd" id="1_uvnfx"]
 [ext_resource type="Texture2D" uid="uid://cpbides33mcu2" path="res://icon.svg" id="2_a3d8c"]
 [ext_resource type="Texture2D" uid="uid://bpg8didr7oick" path="res://Assets/Deer Sprite-Sheet.png" id="3_xpcdj"]
+[ext_resource type="Texture2D" uid="uid://gulx5lx3elqn" path="res://Assets/spotlight_01_a.png" id="4_htcer"]
+[ext_resource type="Script" uid="uid://ds52ao67g7jiq" path="res://Scripts/Player/BodyAnimation.gd" id="4_mtuoh"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xpcdj"]
 height = 61.199997
+
+[sub_resource type="Animation" id="Animation_xpcdj"]
+resource_name = "new_animation"
+length = 0.5
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1, 0]
+}
+
+[sub_resource type="Animation" id="Animation_mtuoh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_htcer"]
+_data = {
+&"RESET": SubResource("Animation_mtuoh"),
+&"new_animation": SubResource("Animation_xpcdj")
+}
 
 [node name="Player" type="Node2D"]
 script = ExtResource("1_uvnfx")
@@ -18,7 +58,6 @@ scale = Vector2(0.18749997, 0.14843744)
 texture = ExtResource("2_a3d8c")
 
 [node name="LegLerpPos" type="Marker2D" parent="."]
-visible = false
 position = Vector2(110.795, 187)
 
 [node name="Sprite2D" type="Sprite2D" parent="LegLerpPos"]
@@ -27,7 +66,6 @@ scale = Vector2(0.6969141, 0.6523437)
 texture = ExtResource("2_a3d8c")
 
 [node name="LegLerpPos2" type="Marker2D" parent="."]
-visible = false
 position = Vector2(-110, 183)
 
 [node name="Sprite2D" type="Sprite2D" parent="LegLerpPos2"]
@@ -68,6 +106,19 @@ offset = Vector2(17.815, -26.44)
 hframes = 17
 frame = 2
 
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Foot2"]
+visible = false
+amount = 30
+texture = ExtResource("4_htcer")
+lifetime = 0.5
+direction = Vector2(-1, 0)
+gravity = Vector2(0, 0)
+initial_velocity_min = 40.13
+initial_velocity_max = 219.62
+scale_amount_min = 0.05
+scale_amount_max = 0.1
+color = Color(0.99999994, 0.28730667, 0.22523719, 1)
+
 [node name="FootUp2" type="Marker2D" parent="."]
 position = Vector2(50.23, 54.51)
 
@@ -84,10 +135,12 @@ texture_filter = 1
 scale = Vector2(5, 5)
 
 [node name="Sprite2D" type="Sprite2D" parent="Body"]
-position = Vector2(-10.455, -7.79)
+position = Vector2(-0.07, -2.635)
 scale = Vector2(2.226, 2.355)
 texture = ExtResource("3_xpcdj")
+offset = Vector2(-6.145, -2.92)
 hframes = 17
+script = ExtResource("4_mtuoh")
 
 [node name="Camera2D" type="Camera2D" parent="Body"]
 position = Vector2(47.99997, 24.600006)
@@ -97,3 +150,9 @@ zoom = Vector2(0.295, 0.295)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
 position = Vector2(-0.20000225, 11.4)
 shape = SubResource("CapsuleShape2D_xpcdj")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Body"]
+libraries = {
+&"": SubResource("AnimationLibrary_htcer")
+}
+autoplay = "new_animation"

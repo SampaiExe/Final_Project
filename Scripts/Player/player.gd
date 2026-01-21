@@ -7,7 +7,7 @@ var elbow1:Vector2
 var elbow2:Vector2
 
 @export var SPEED = 500.0
-@export var JUMP_VELOCITY = -400.0
+@export var JUMP_VELOCITY = -800.0
 
 
 var limb_length = 150.0
@@ -39,11 +39,15 @@ func _physics_process(delta):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	
-	if limb_length + limb_length < $Foot1.position.distance_to($Body.position):
+	if limb_length + limb_length < $Foot1.position.distance_to($Body.position) or $Body.position.y > $LegLerpPos.position.y:
 		$LegLerpPos.position = $LegTargetPos.position
 		pass
-	if limb_length + limb_length < $Foot2.position.distance_to($Body.position):
-		$LegLerpPos2.position = $LegTargetPos.position
+	if limb_length + limb_length < $Foot2.position.distance_to($Body.position) or $Body.position.y > $LegLerpPos2.position.y:
+		if $LegTargetPos.position.distance_to($LegLerpPos.position) > 200.0:
+			$LegLerpPos2.position = $LegTargetPos.position
+		else:
+			$LegLerpPos2.position.x = $LegTargetPos.position.x - 100.0
+			$LegLerpPos2.position.y = $LegTargetPos.position.y
 		pass
 	$Foot1.position = lerp($Foot1.position, $LegLerpPos.position, 10*delta)
 	$Foot2.position = lerp($Foot2.position, $LegLerpPos2.position, 10*delta)
