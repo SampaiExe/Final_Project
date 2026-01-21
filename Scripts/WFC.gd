@@ -5,11 +5,15 @@ const GRID_HEIGHT = 10
 
 @onready var tilemap = $TileMapLayer
 
-enum sockets { } # Socket Enum
+
 
 # Socket order: [up, right, down, left]
 #region rules
-#ADD RULES HERE
+#ADD BASE TILE RULES HERE
+enum sockets { 
+	
+} # Socket Enum
+
 var base_tiles = [
 	{
 		"name": "Name",
@@ -20,7 +24,6 @@ var base_tiles = [
 	}
 ]
 #endregion 
-
 
 var all_tiles = base_tiles
 var grid = []
@@ -33,45 +36,6 @@ func _ready():
 	propagate_edges()
 	wfc()
 	draw_grid()
-
-func gen_tiles(tiles): 
-	var _tiles = [] 
-	for tile in tiles: 
-		var sockets = tile["socket"].duplicate() 
-		for i in range(tile["rotations"]): 
-			all_tiles.append({ 
-			"name": tile["name"] + "_" + str(i * 90), # optional, for debugging 
-			"socket": sockets.duplicate(), 
-			"atlas": tile["atlas"], 
-			"alt": i, 
-			}) 
-			sockets = [sockets[3], sockets[0], sockets[1], sockets[2]] 
-	return _tiles
-			
-
-func propagate_edges():
-	for y in range(GRID_HEIGHT):
-		for x in range(GRID_WIDTH):
-			if x == 0 or y == 0 or x == GRID_WIDTH - 1 or y == GRID_HEIGHT - 1:
-				propagate(Vector2i(x, y))
-
-
-func init_grid():
-	grid.clear()
-	for y in range(GRID_HEIGHT):
-		grid.append([])
-		for x in range(GRID_WIDTH):
-			#if x == 0 or y == 0 or x == GRID_WIDTH - 1 or y == GRID_HEIGHT - 1:
-				#grid[y].append([get_grass_tile()])
-			#else:
-				grid[y].append(all_tiles.duplicate(true))
-
-func get_tile(name: String):
-	for tile in all_tiles:
-		if tile["name"] == name:
-			return tile
-	return null
-
 
 func wfc():
 	while not is_fully_collapsed():
@@ -113,13 +77,6 @@ func reduce_random_with_backtracking() -> bool:
 		
 	return false
 
-func save_state():
-	history.append(grid.duplicate(true))
-
-func restore_state():
-	grid = history.pop_back()
-
-
 func propagate(start: Vector2i) -> bool:
 	var stack = [start]
 	while stack.size() > 0:
@@ -156,13 +113,6 @@ func propagate(start: Vector2i) -> bool:
 				stack.push_front(n)
 	return true
 
-func has_contradiction() -> bool:
-	for y in range(GRID_HEIGHT):
-		for x in range(GRID_WIDTH):
-			if grid[y][x].is_empty():
-				return true
-	return false
-
 func draw_grid():
 	for y in range(GRID_HEIGHT):
 		for x in range(GRID_WIDTH):
@@ -170,9 +120,63 @@ func draw_grid():
 				var t = grid[y][x][0]
 				tilemap.set_cell(Vector2i(x, y), 0, t["atlas"], t["alt"])
 
+#region Helper Functions
+func has_contradiction() -> bool:
+	for y in range(GRID_HEIGHT):
+		for x in range(GRID_WIDTH):
+			if grid[y][x].is_empty():
+				return true
+	return false
+
+func save_state():
+	history.append(grid.duplicate(true))
+
+func restore_state():
+	grid = history.pop_back()
+
+
 func is_fully_collapsed() -> bool:
 	for y in range(GRID_HEIGHT):
 		for x in range(GRID_WIDTH):
 			if grid[y][x].size() > 1:
 				return false
 	return true
+	
+func gen_tiles(tiles): 
+	var _tiles = [] 
+	for tile in tiles: 
+		var sockets = tile["socket"].duplicate() 
+		for i in range(tile["rotations"]): 
+			all_tiles.append({ 
+			"name": tile["name"] + "_" + str(i * 90), # optional, for debugging 
+			"socket": sockets.duplicate(), 
+			"atlas": tile["atlas"], 
+			"alt": i, 
+			}) 
+			sockets = [sockets[3], sockets[0], sockets[1], sockets[2]] 
+	return _tiles
+			
+
+func propagate_edges():
+	for y in range(GRID_HEIGHT):
+		for x in range(GRID_WIDTH):
+			if x == 0 or y == 0 or x == GRID_WIDTH - 1 or y == GRID_HEIGHT - 1:
+				propagate(Vector2i(x, y))
+
+
+func init_grid():
+	grid.clear()
+	for y in range(GRID_HEIGHT):
+		grid.append([])
+		for x in range(GRID_WIDTH):
+			#if x == 0 or y == 0 or x == GRID_WIDTH - 1 or y == GRID_HEIGHT - 1:
+				#grid[y].append([get_grass_tile()])
+			#else:
+				grid[y].append(all_tiles.duplicate(true))
+
+func get_tile(name: String):
+	for tile in all_tiles:
+		if tile["name"] == name:
+			return tile
+	return null
+#endregion
