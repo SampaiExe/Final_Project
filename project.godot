@@ -11,5 +11,11 @@ config_version=5
 [application]
 
 config/name="Final Project"
+run/main_scene="uid://44gyi4et5eug"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=576
+window/size/viewport_height=384

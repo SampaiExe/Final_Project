@@ -1,7 +1,7 @@
 extends Node2D
 
 const GRID_WIDTH = 18
-const GRID_HEIGHT = 10
+const GRID_HEIGHT = 1
 
 @onready var tilemap = $TileMapLayer
 
@@ -11,16 +11,93 @@ const GRID_HEIGHT = 10
 #region rules
 #ADD BASE TILE RULES HERE
 enum sockets { 
-	
+	FLOOR_LOW, GRASS_LOW_LEFT_START, GRASS_LOW_LEFT_START_SMALL, GRASS_LOW_RIGHT_START, FLOOR_LOW_DIRT, GRASS_LOW_MIDDLE, EMPTY
 } # Socket Enum
 
 var base_tiles = [
 	{
-		"name": "Name",
-		"socket": [[], [], [], [], []], #Sockets
-		"atlas": Vector2i(0,0), 		#Atlas Coords
+		"name": "Floor_Low_Plane",
+		"socket": [
+			[],																																#UP
+			[sockets.FLOOR_LOW, sockets.EMPTY, sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL, sockets.FLOOR_LOW_DIRT],	#RIGHT
+			[],																																#DOWN
+			[sockets.FLOOR_LOW, sockets.EMPTY, sockets.GRASS_LOW_RIGHT_START, sockets.FLOOR_LOW_DIRT],										#LEFT
+		],
+		"atlas": Vector2i(2,1), 		#Atlas Coords
 		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
-		"rotations": 4					#Nr. of rotations tile has
+		"rotations": 1					#Nr. of rotations tile has
+	},
+	{
+		"name": "Floor_Low_Dirt",
+		"socket": [
+			[],																																#UP
+			[sockets.FLOOR_LOW, sockets.EMPTY, sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL, sockets.FLOOR_LOW_DIRT],	#RIGHT
+			[],																																#DOWN
+			[sockets.FLOOR_LOW, sockets.EMPTY, sockets.GRASS_LOW_RIGHT_START, sockets.FLOOR_LOW_DIRT],										#LEFT
+		],
+		"atlas": Vector2i(4,1), 		#Atlas Coords
+		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
+		"rotations": 1					#Nr. of rotations tile has
+	},
+	{
+		"name": "Floor_Low_Empty",
+		"socket": [
+			[],																																#UP
+			[sockets.FLOOR_LOW, sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL, sockets.FLOOR_LOW_DIRT],					#RIGHT
+			[],																																#DOWN
+			[sockets.FLOOR_LOW, sockets.GRASS_LOW_RIGHT_START, sockets.FLOOR_LOW_DIRT],														#LEFT
+		],
+		"atlas": Vector2i(14,0), 		#Atlas Coords
+		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
+		"rotations": 1					#Nr. of rotations tile has
+	},
+	{
+		"name": "Floor_Low_Grass_Start_Left",
+		"socket": [
+			[],																																#UP
+			[sockets.FLOOR_LOW, sockets.EMPTY, sockets.FLOOR_LOW_DIRT],																		#RIGHT
+			[],																																#DOWN
+			[sockets.GRASS_LOW_RIGHT_START, sockets.GRASS_LOW_MIDDLE],																		#LEFT
+		],
+		"atlas": Vector2i(5,1), 		#Atlas Coords
+		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
+		"rotations": 1					#Nr. of rotations tile has
+	},
+	{
+		"name": "Floor_Low_Grass_Start_Left_Small",
+		"socket": [
+			[],																																#UP
+			[sockets.FLOOR_LOW, sockets.EMPTY, sockets.FLOOR_LOW_DIRT],																		#RIGHT
+			[],																																#DOWN
+			[sockets.GRASS_LOW_RIGHT_START, sockets.GRASS_LOW_MIDDLE],																		#LEFT
+		],
+		"atlas": Vector2i(12,1), 		#Atlas Coords
+		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
+		"rotations": 1					#Nr. of rotations tile has
+	},
+	{
+		"name": "Floor_Low_Grass_Start_Right",
+		"socket": [
+			[],																																#UP
+			[sockets.FLOOR_LOW, sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL, sockets.FLOOR_LOW_DIRT],	#RIGHT
+			[],																																#DOWN
+			[sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL, sockets.GRASS_LOW_MIDDLE],																																#LEFT
+		],
+		"atlas": Vector2i(11,1), 		#Atlas Coords
+		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
+		"rotations": 1					#Nr. of rotations tile has
+	},
+	{
+		"name": "Floor_Low_Grass_Middle",
+		"socket": [
+			[],																																#UP
+			[sockets.GRASS_LOW_RIGHT_START, sockets.GRASS_LOW_MIDDLE],	#RIGHT
+			[],																																#DOWN
+			[sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL, sockets.GRASS_LOW_MIDDLE],																																#LEFT
+		],
+		"atlas": Vector2i(7,1), 		#Atlas Coords
+		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
+		"rotations": 1					#Nr. of rotations tile has
 	}
 ]
 #endregion 
@@ -31,9 +108,9 @@ var history = []
 
 func _ready():
 	randomize()
-	all_tiles = gen_tiles(base_tiles)
+	#all_tiles = gen_tiles(base_tiles)
 	init_grid()
-	propagate_edges()
+	#propagate_edges()
 	wfc()
 	draw_grid()
 
@@ -101,9 +178,10 @@ func propagate(start: Vector2i) -> bool:
 			var allowed = []
 			for n_opt in grid[n.y][n.x]:
 				for c_opt in current_options:
-					if n_opt["type"] in c_opt["socket"][dir]:
-						allowed.append(n_opt)
-						break
+					for poss in c_opt["socket"][dir]:
+						if poss in n_opt["socket"][(dir+2)%4]:
+							allowed.append(n_opt)
+							break
 
 			if allowed.is_empty():
 				return false
