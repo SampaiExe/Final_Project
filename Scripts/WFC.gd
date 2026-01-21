@@ -5,102 +5,18 @@ const GRID_HEIGHT = 10
 
 @onready var tilemap = $TileMapLayer
 
-enum sockets {
-	GRASS,
-	FLOOR,
-	WALL_UP,
-	WALL_RIGHT,
-	WALL_DOWN,
-	WALL_LEFT,
-	CORNER_LU,
-	CORNER_UR,
-	CORNER_RD,
-	CORNER_DL
-}
+enum sockets { } # Socket Enum
 
 # Socket order: [up, right, down, left]
 #region rules
 #ADD RULES HERE
 var base_tiles = [
 	{
-		"name": "Wall_0",
-		"socket": [[sockets.GRASS], [sockets.WALL_UP, sockets.CORNER_UR], [sockets.FLOOR], [sockets.WALL_UP, sockets.CORNER_LU]],
-		"atlas": Vector2i(3,0),
-		"type": sockets.WALL_UP,
-		"alt": 0
-	},
-	{
-		"name": "Wall_90",
-		"socket": [[sockets.WALL_RIGHT, sockets.CORNER_UR], [sockets.GRASS], [sockets.WALL_RIGHT, sockets.CORNER_RD], [sockets.FLOOR]],
-		"atlas": Vector2i(3,0),
-		"type": sockets.WALL_RIGHT,
-		"alt": 1
-	},
-	{
-		"name": "Wall_180",
-		"socket": [[sockets.FLOOR], [sockets.WALL_DOWN, sockets.CORNER_RD], [sockets.GRASS], [sockets.WALL_DOWN, sockets.CORNER_DL]],
-		"atlas": Vector2i(3,0),
-		"type": sockets.WALL_DOWN,
-		"alt": 2
-	},
-	{
-		"name": "Wall_270",
-		"socket": [[sockets.WALL_LEFT, sockets.CORNER_LU], [sockets.FLOOR], [sockets.WALL_LEFT, sockets.CORNER_DL], [sockets.GRASS]],
-		"atlas": Vector2i(3,0),
-		"type": sockets.WALL_LEFT,
-		"alt": 3
-	},
-	{
-		"name": "Corner_LU",
-		"socket": [[sockets.GRASS], [sockets.WALL_UP, sockets.CORNER_UR], [sockets.WALL_LEFT, sockets.CORNER_DL], [sockets.GRASS]],
-		"atlas": Vector2i(2,0),
-		"type": sockets.CORNER_LU,
-		"alt": 0
-	},
-	{
-		"name": "Corner_UR",
-		"socket": [[sockets.GRASS], [sockets.GRASS], [sockets.WALL_RIGHT, sockets.CORNER_RD], [sockets.WALL_UP, sockets.CORNER_LU]],
-		"atlas": Vector2i(2,0),
-		"type": sockets.CORNER_UR,
-		"alt": 1
-	},
-	{
-		"name": "Corner_RD",
-		"socket": [[sockets.WALL_RIGHT, sockets.CORNER_UR], [sockets.GRASS], [sockets.GRASS], [sockets.WALL_DOWN, sockets.CORNER_DL]],
-		"atlas": Vector2i(2,0),
-		"type": sockets.CORNER_RD,
-		"alt": 2
-	},
-	{
-		"name": "Corner_DL",
-		"socket": [[sockets.WALL_LEFT, sockets.CORNER_LU], [sockets.WALL_DOWN, sockets.CORNER_RD], [sockets.GRASS], [sockets.GRASS]],
-		"atlas": Vector2i(2,0),
-		"type": sockets.CORNER_DL,
-		"alt": 3
-	},
-	{
-		"name": "Grass",
-		"socket": [
-			[sockets.WALL_DOWN, sockets.CORNER_RD, sockets.CORNER_DL, sockets.GRASS],
-			[sockets.WALL_LEFT, sockets.CORNER_LU, sockets.CORNER_DL, sockets.GRASS],
-			[sockets.WALL_UP, sockets.CORNER_LU, sockets.CORNER_UR, sockets.GRASS],
-			[sockets.WALL_RIGHT, sockets.CORNER_RD, sockets.CORNER_UR, sockets.GRASS]
-		],
-		"atlas": Vector2i(7,0),
-		"type": sockets.GRASS,
-		"alt": 0
-	},
-	{
-		"name": "Floor",
-		"socket": [
-			[sockets.FLOOR, sockets.WALL_UP],
-			[sockets.FLOOR, sockets.WALL_RIGHT],
-			[sockets.FLOOR, sockets.WALL_DOWN],
-			[sockets.FLOOR, sockets.WALL_LEFT]
-		],
-		"atlas": Vector2i(0,1),
-		"type": sockets.FLOOR,
-		"alt": 0
+		"name": "Name",
+		"socket": [[], [], [], [], []], #Sockets
+		"atlas": Vector2i(0,0), 		#Atlas Coords
+		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
+		"rotations": 4					#Nr. of rotations tile has
 	}
 ]
 #endregion 
@@ -112,10 +28,26 @@ var history = []
 
 func _ready():
 	randomize()
+	all_tiles = gen_tiles(base_tiles)
 	init_grid()
 	propagate_edges()
 	wfc()
 	draw_grid()
+
+func gen_tiles(tiles): 
+	var _tiles = [] 
+	for tile in tiles: 
+		var sockets = tile["socket"].duplicate() 
+		for i in range(tile["rotations"]): 
+			all_tiles.append({ 
+			"name": tile["name"] + "_" + str(i * 90), # optional, for debugging 
+			"socket": sockets.duplicate(), 
+			"atlas": tile["atlas"], 
+			"alt": i, 
+			}) 
+			sockets = [sockets[3], sockets[0], sockets[1], sockets[2]] 
+	return _tiles
+			
 
 func propagate_edges():
 	for y in range(GRID_HEIGHT):
@@ -129,14 +61,14 @@ func init_grid():
 	for y in range(GRID_HEIGHT):
 		grid.append([])
 		for x in range(GRID_WIDTH):
-			if x == 0 or y == 0 or x == GRID_WIDTH - 1 or y == GRID_HEIGHT - 1:
-				grid[y].append([get_grass_tile()])
-			else:
+			#if x == 0 or y == 0 or x == GRID_WIDTH - 1 or y == GRID_HEIGHT - 1:
+				#grid[y].append([get_grass_tile()])
+			#else:
 				grid[y].append(all_tiles.duplicate(true))
 
-func get_grass_tile():
+func get_tile(name: String):
 	for tile in all_tiles:
-		if tile["type"] == sockets.GRASS:
+		if tile["name"] == name:
 			return tile
 	return null
 
