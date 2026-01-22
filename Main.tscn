@@ -13,11 +13,15 @@
 texture = ExtResource("7_c6i3y")
 texture_region_size = Vector2i(32, 32)
 6:1/0 = 0
+6:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 2:0/0 = 0
 2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 3:0/0 = 0
 4:1/0 = 0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 5:0/0 = 0
 4:0/0 = 0
 6:0/0 = 0
@@ -29,18 +33,28 @@ texture_region_size = Vector2i(32, 32)
 12:0/0 = 0
 13:0/0 = 0
 13:1/0 = 0
+13:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 11:1/0 = 0
+11:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 10:1/0 = 0
+10:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 9:1/0 = 0
+9:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 8:1/0 = 0
+8:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 7:1/0 = 0
+7:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 5:1/0 = 0
+5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 14:0/0 = 0
 14:1/0 = 0
+14:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 12:1/0 = 0
+12:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
 [sub_resource type="TileSet" id="TileSet_j4qnp"]
 tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 128
 sources/0 = SubResource("TileSetAtlasSource_c2ibq")
 
 [node name="Node2D" type="Node2D"]
@@ -55,6 +69,7 @@ repeat_size = Vector2(576, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax/Sky"]
 texture_filter = 1
+rotation = 0.0011376928
 texture = ExtResource("1_lgr22")
 
 [node name="Far" type="Parallax2D" parent="Parallax"]
@@ -105,3 +120,4 @@ tile_set = SubResource("TileSet_j4qnp")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(143, -38)
+zoom = Vector2(2, 2)

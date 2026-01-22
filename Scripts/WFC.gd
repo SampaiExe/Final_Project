@@ -1,7 +1,7 @@
 extends Node2D
 
-const GRID_WIDTH = 18
-const GRID_HEIGHT = 1
+const GRID_WIDTH = 25
+const GRID_HEIGHT = 2
 
 @onready var tilemap = $TileMapLayer
 
@@ -11,18 +11,21 @@ const GRID_HEIGHT = 1
 #region rules
 #ADD BASE TILE RULES HERE
 enum sockets { 
-	FLOOR_LOW, GRASS_LOW_LEFT_START, GRASS_LOW_LEFT_START_SMALL, GRASS_LOW_RIGHT_START, FLOOR_LOW_DIRT, GRASS_LOW_MIDDLE, EMPTY
+	FLOOR_LOW, GRASS_LOW_LEFT_START, GRASS_LOW_LEFT_START_SMALL, GRASS_LOW_RIGHT_START, FLOOR_LOW_DIRT, GRASS_LOW_MIDDLE, EMPTY,
+	TOP_GRASS, TOP_EMPTY, TOP_PEBBLE, 
+	TOP_DECOR_ROCK_LEFT_1, TOP_DECOR_ROCK_LEFT_2, TOP_DECOR_ROCK_LEFT_3, TOP_DECOR_ROCK_RIGHT_1, TOP_DECOR_ROCK_RIGHT_2, TOP_DECOR_ROCK_RIGHT_3
 } # Socket Enum
 
 var base_tiles = [
 	{
 		"name": "Floor_Low_Plane",
 		"socket": [
-			[],																																#UP
+			[sockets.TOP_PEBBLE, sockets.TOP_GRASS, sockets.TOP_DECOR_ROCK_LEFT_1, sockets.TOP_DECOR_ROCK_RIGHT_3],																																#UP
 			[sockets.FLOOR_LOW, sockets.EMPTY, sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL, sockets.FLOOR_LOW_DIRT],	#RIGHT
 			[],																																#DOWN
 			[sockets.FLOOR_LOW, sockets.EMPTY, sockets.GRASS_LOW_RIGHT_START, sockets.FLOOR_LOW_DIRT],										#LEFT
 		],
+		"type": sockets.FLOOR_LOW,
 		"atlas": Vector2i(2,1), 		#Atlas Coords
 		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
 		"rotations": 1					#Nr. of rotations tile has
@@ -30,11 +33,12 @@ var base_tiles = [
 	{
 		"name": "Floor_Low_Dirt",
 		"socket": [
-			[],																																#UP
+			[sockets.TOP_PEBBLE, sockets.TOP_GRASS, sockets.TOP_DECOR_ROCK_LEFT_1, sockets.TOP_DECOR_ROCK_RIGHT_3],																																#UP
 			[sockets.FLOOR_LOW, sockets.EMPTY, sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL, sockets.FLOOR_LOW_DIRT],	#RIGHT
 			[],																																#DOWN
 			[sockets.FLOOR_LOW, sockets.EMPTY, sockets.GRASS_LOW_RIGHT_START, sockets.FLOOR_LOW_DIRT],										#LEFT
 		],
+		"type": sockets.FLOOR_LOW_DIRT,
 		"atlas": Vector2i(4,1), 		#Atlas Coords
 		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
 		"rotations": 1					#Nr. of rotations tile has
@@ -42,11 +46,12 @@ var base_tiles = [
 	{
 		"name": "Floor_Low_Empty",
 		"socket": [
-			[],																																#UP
+			[sockets.TOP_EMPTY],																																#UP
 			[sockets.FLOOR_LOW, sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL, sockets.FLOOR_LOW_DIRT],					#RIGHT
 			[],																																#DOWN
 			[sockets.FLOOR_LOW, sockets.GRASS_LOW_RIGHT_START, sockets.FLOOR_LOW_DIRT],														#LEFT
 		],
+		"type": sockets.EMPTY,
 		"atlas": Vector2i(14,0), 		#Atlas Coords
 		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
 		"rotations": 1					#Nr. of rotations tile has
@@ -54,11 +59,12 @@ var base_tiles = [
 	{
 		"name": "Floor_Low_Grass_Start_Left",
 		"socket": [
-			[],																																#UP
-			[sockets.FLOOR_LOW, sockets.EMPTY, sockets.FLOOR_LOW_DIRT],																		#RIGHT
+			[sockets.TOP_PEBBLE, sockets.TOP_GRASS, sockets.TOP_DECOR_ROCK_LEFT_1, sockets.TOP_DECOR_ROCK_LEFT_2, sockets.TOP_DECOR_ROCK_LEFT_3, sockets.TOP_DECOR_ROCK_RIGHT_1, sockets.TOP_DECOR_ROCK_RIGHT_2, sockets.TOP_DECOR_ROCK_RIGHT_3],																																#UP
+			[sockets.GRASS_LOW_RIGHT_START, sockets.GRASS_LOW_MIDDLE],																		#RIGHT
 			[],																																#DOWN
-			[sockets.GRASS_LOW_RIGHT_START, sockets.GRASS_LOW_MIDDLE],																		#LEFT
+			[sockets.FLOOR_LOW, sockets.EMPTY, sockets.FLOOR_LOW_DIRT],																		#LEFT
 		],
+		"type": sockets.GRASS_LOW_LEFT_START,
 		"atlas": Vector2i(5,1), 		#Atlas Coords
 		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
 		"rotations": 1					#Nr. of rotations tile has
@@ -66,11 +72,12 @@ var base_tiles = [
 	{
 		"name": "Floor_Low_Grass_Start_Left_Small",
 		"socket": [
-			[],																																#UP
-			[sockets.FLOOR_LOW, sockets.EMPTY, sockets.FLOOR_LOW_DIRT],																		#RIGHT
+			[sockets.TOP_PEBBLE, sockets.TOP_GRASS, sockets.TOP_DECOR_ROCK_LEFT_1, sockets.TOP_DECOR_ROCK_LEFT_2, sockets.TOP_DECOR_ROCK_LEFT_3, sockets.TOP_DECOR_ROCK_RIGHT_1, sockets.TOP_DECOR_ROCK_RIGHT_2, sockets.TOP_DECOR_ROCK_RIGHT_3],																																#UP
+			[sockets.GRASS_LOW_RIGHT_START, sockets.GRASS_LOW_MIDDLE],																		#RIGHT
 			[],																																#DOWN
-			[sockets.GRASS_LOW_RIGHT_START, sockets.GRASS_LOW_MIDDLE],																		#LEFT
+			[sockets.FLOOR_LOW, sockets.EMPTY, sockets.FLOOR_LOW_DIRT],																		#LEFT
 		],
+		"type": sockets.GRASS_LOW_LEFT_START_SMALL,
 		"atlas": Vector2i(12,1), 		#Atlas Coords
 		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
 		"rotations": 1					#Nr. of rotations tile has
@@ -78,11 +85,12 @@ var base_tiles = [
 	{
 		"name": "Floor_Low_Grass_Start_Right",
 		"socket": [
-			[],																																#UP
-			[sockets.FLOOR_LOW, sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL, sockets.FLOOR_LOW_DIRT],	#RIGHT
+			[sockets.TOP_PEBBLE, sockets.TOP_GRASS, sockets.TOP_DECOR_ROCK_LEFT_1, sockets.TOP_DECOR_ROCK_LEFT_2, sockets.TOP_DECOR_ROCK_LEFT_3, sockets.TOP_DECOR_ROCK_RIGHT_1, sockets.TOP_DECOR_ROCK_RIGHT_2, sockets.TOP_DECOR_ROCK_RIGHT_3],																																#UP
+			[sockets.FLOOR_LOW, sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL, sockets.FLOOR_LOW_DIRT, sockets.EMPTY],	#RIGHT
 			[],																																#DOWN
 			[sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL, sockets.GRASS_LOW_MIDDLE],																																#LEFT
 		],
+		"type": sockets.GRASS_LOW_RIGHT_START,
 		"atlas": Vector2i(11,1), 		#Atlas Coords
 		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
 		"rotations": 1					#Nr. of rotations tile has
@@ -90,12 +98,182 @@ var base_tiles = [
 	{
 		"name": "Floor_Low_Grass_Middle",
 		"socket": [
-			[],																																#UP
+			[sockets.TOP_PEBBLE, sockets.TOP_GRASS, sockets.TOP_DECOR_ROCK_LEFT_1, sockets.TOP_DECOR_ROCK_LEFT_2, sockets.TOP_DECOR_ROCK_LEFT_3, sockets.TOP_DECOR_ROCK_RIGHT_1, sockets.TOP_DECOR_ROCK_RIGHT_2, sockets.TOP_DECOR_ROCK_RIGHT_3],																																#UP
 			[sockets.GRASS_LOW_RIGHT_START, sockets.GRASS_LOW_MIDDLE],	#RIGHT
 			[],																																#DOWN
 			[sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL, sockets.GRASS_LOW_MIDDLE],																																#LEFT
 		],
+		"type": sockets.GRASS_LOW_MIDDLE,
 		"atlas": Vector2i(7,1), 		#Atlas Coords
+		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
+		"rotations": 1					#Nr. of rotations tile has
+	},
+	{
+		"name": "Top_Pebble_1",
+		"socket": [
+			[],																																#UP
+			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS],	#RIGHT
+			[sockets.FLOOR_LOW, sockets.FLOOR_LOW_DIRT],																																#DOWN
+			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS],																																#LEFT
+		],
+		"type": sockets.TOP_PEBBLE,
+		"atlas": Vector2i(2,0), 		#Atlas Coords
+		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
+		"rotations": 1					#Nr. of rotations tile has
+	},
+	{
+		"name": "Top_Pebble_2",
+		"socket": [
+			[],																																#UP
+			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS],	#RIGHT
+			[sockets.FLOOR_LOW, sockets.FLOOR_LOW_DIRT],																																#DOWN
+			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS],																																#LEFT
+		],
+		"type": sockets.TOP_PEBBLE,
+		"atlas": Vector2i(3,0), 		#Atlas Coords
+		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
+		"rotations": 1					#Nr. of rotations tile has
+	},
+	{
+		"name": "Top_Pebble_3",
+		"socket": [
+			[],																																#UP
+			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS],	#RIGHT
+			[sockets.FLOOR_LOW, sockets.FLOOR_LOW_DIRT],																																#DOWN
+			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS],																																#LEFT
+		],
+		"type": sockets.TOP_PEBBLE,
+		"atlas": Vector2i(12,0), 		#Atlas Coords
+		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
+		"rotations": 1					#Nr. of rotations tile has
+	},
+	{
+		"name": "Top_Pebble_4",
+		"socket": [
+			[],																																#UP
+			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS],	#RIGHT
+			[sockets.FLOOR_LOW, sockets.FLOOR_LOW_DIRT],																																#DOWN
+			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS],																																#LEFT
+		],
+		"type": sockets.TOP_PEBBLE,
+		"atlas": Vector2i(4,0), 		#Atlas Coords
+		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
+		"rotations": 1					#Nr. of rotations tile has
+	},
+	{
+		"name": "Top_Grass_1",
+		"socket": [
+			[],																																#UP
+			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS],	#RIGHT
+			[sockets.GRASS_LOW_RIGHT_START, sockets.GRASS_LOW_MIDDLE, sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL, sockets.FLOOR_LOW_DIRT],																																#DOWN
+			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS, sockets.TOP_DECOR_ROCK_LEFT_3, sockets.TOP_DECOR_ROCK_RIGHT_3],																																#LEFT
+		],
+		"type": sockets.TOP_GRASS,
+		"atlas": Vector2i(11,0), 		#Atlas Coords
+		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
+		"rotations": 1					#Nr. of rotations tile has
+	},
+	{
+		"name": "Top_Grass_2",
+		"socket": [
+			[],																																#UP
+			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS],	#RIGHT
+			[sockets.GRASS_LOW_RIGHT_START, sockets.GRASS_LOW_MIDDLE, sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL, sockets.FLOOR_LOW_DIRT],																																#DOWN
+			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS, sockets.TOP_DECOR_ROCK_LEFT_3, sockets.TOP_DECOR_ROCK_RIGHT_3],																																#LEFT
+		],
+		"type": sockets.TOP_GRASS,
+		"atlas": Vector2i(13,0), 		#Atlas Coords
+		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
+		"rotations": 1					#Nr. of rotations tile has
+	},
+	{
+		"name": "Top_Rock_Right_3",
+		"socket": [
+			[],																																#UP
+			[sockets.TOP_GRASS, sockets.TOP_DECOR_ROCK_RIGHT_3],	#RIGHT
+			[sockets.GRASS_LOW_RIGHT_START, sockets.GRASS_LOW_MIDDLE, sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL, sockets.FLOOR_LOW, sockets.FLOOR_LOW_DIRT],										#DOWN
+			[sockets.TOP_DECOR_ROCK_RIGHT_2, sockets.TOP_DECOR_ROCK_LEFT_1],																																#LEFT
+		],
+		"type": sockets.TOP_DECOR_ROCK_RIGHT_3,
+		"atlas": Vector2i(10,0), 		#Atlas Coords
+		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
+		"rotations": 1					#Nr. of rotations tile has
+	},
+	{
+		"name": "Top_Rock_Right_2",
+		"socket": [
+			[],																																#UP
+			[sockets.TOP_DECOR_ROCK_RIGHT_3],	#RIGHT
+			[sockets.GRASS_LOW_RIGHT_START, sockets.GRASS_LOW_MIDDLE, sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL],										#DOWN
+			[sockets.TOP_DECOR_ROCK_RIGHT_1],																																#LEFT
+		],
+		"type": sockets.TOP_DECOR_ROCK_RIGHT_2,
+		"atlas": Vector2i(9,0), 		#Atlas Coords
+		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
+		"rotations": 1					#Nr. of rotations tile has
+	},
+	{
+		"name": "Top_Rock_Right_1",
+		"socket": [
+			[],																																#UP
+			[sockets.TOP_DECOR_ROCK_RIGHT_2],	#RIGHT
+			[sockets.GRASS_LOW_RIGHT_START, sockets.GRASS_LOW_MIDDLE, sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL],										#DOWN
+			[sockets.TOP_DECOR_ROCK_LEFT_3, sockets.TOP_DECOR_ROCK_RIGHT_3, sockets.TOP_GRASS],																																#LEFT
+		],
+		"type": sockets.TOP_DECOR_ROCK_RIGHT_1,
+		"atlas": Vector2i(8,0), 		#Atlas Coords
+		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
+		"rotations": 1					#Nr. of rotations tile has
+	},
+	{
+		"name": "Top_Rock_Left_3",
+		"socket": [
+			[],																																#UP
+			[sockets.TOP_GRASS, sockets.TOP_DECOR_ROCK_RIGHT_1, sockets.TOP_PEBBLE],	#RIGHT
+			[sockets.GRASS_LOW_RIGHT_START, sockets.GRASS_LOW_MIDDLE, sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL],										#DOWN
+			[sockets.TOP_DECOR_ROCK_LEFT_2],																																#LEFT
+		],
+		"type": sockets.TOP_DECOR_ROCK_LEFT_1,
+		"atlas": Vector2i(7,0), 		#Atlas Coords
+		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
+		"rotations": 1					#Nr. of rotations tile has
+	},
+	{
+		"name": "Top_Rock_Left_2",
+		"socket": [
+			[],																																#UP
+			[sockets.TOP_DECOR_ROCK_LEFT_3],	#RIGHT
+			[sockets.GRASS_LOW_RIGHT_START, sockets.GRASS_LOW_MIDDLE, sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL],										#DOWN
+			[sockets.TOP_DECOR_ROCK_LEFT_1],																																#LEFT
+		],
+		"type": sockets.TOP_DECOR_ROCK_LEFT_2,
+		"atlas": Vector2i(6,0), 		#Atlas Coords
+		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
+		"rotations": 1					#Nr. of rotations tile has
+	},
+	{
+		"name": "Top_Rock_Left_1",
+		"socket": [
+			[],																																#UP
+			[sockets.TOP_DECOR_ROCK_RIGHT_3, sockets.TOP_DECOR_ROCK_LEFT_2],	#RIGHT
+			[sockets.GRASS_LOW_RIGHT_START, sockets.GRASS_LOW_MIDDLE, sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL, sockets.FLOOR_LOW, sockets.FLOOR_LOW_DIRT],										#DOWN
+			[sockets.TOP_DECOR_ROCK_RIGHT_1, sockets.TOP_PEBBLE],																																#LEFT
+		],
+		"type": sockets.TOP_DECOR_ROCK_LEFT_1,
+		"atlas": Vector2i(5,0), 		#Atlas Coords
+		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
+		"rotations": 1					#Nr. of rotations tile has
+	},
+	{
+		"name": "Top_Empty",
+		"socket": [
+			[],																																#UP
+			[sockets.TOP_GRASS, sockets.TOP_PEBBLE, sockets.TOP_DECOR_ROCK_LEFT_1],	#RIGHT
+			[sockets.EMPTY],										#DOWN
+			[sockets.TOP_GRASS, sockets.TOP_PEBBLE, sockets.TOP_DECOR_ROCK_RIGHT_3],																																#LEFT
+		],
+		"type": sockets.TOP_EMPTY,
+		"atlas": Vector2i(14,0), 		#Atlas Coords
 		"alt": 0,						#Tile Map alt image (0, 1, 2, 3) for rotations
 		"rotations": 1					#Nr. of rotations tile has
 	}
@@ -154,6 +332,12 @@ func reduce_random_with_backtracking() -> bool:
 		
 	return false
 
+func sockets_compatible(a: Array, b: Array) -> bool:
+	for s in a:
+		if s in b:
+			return true
+	return false
+
 func propagate(start: Vector2i) -> bool:
 	var stack = [start]
 	while stack.size() > 0:
@@ -161,27 +345,29 @@ func propagate(start: Vector2i) -> bool:
 		var current_options = grid[c.y][c.x]
 
 		var neighbors = [
-			Vector2i(c.x, c.y - 1),
-			Vector2i(c.x + 1, c.y),
-			Vector2i(c.x, c.y + 1),
-			Vector2i(c.x - 1, c.y)
+			Vector2i(c.x, c.y - 1), #up
+			Vector2i(c.x + 1, c.y), #right
+			Vector2i(c.x, c.y + 1), #down
+			Vector2i(c.x - 1, c.y)  #left
 		]
 
 		for dir in range(4):
 			var n = neighbors[dir]
 			if n.x < 0 or n.x >= GRID_WIDTH or n.y < 0 or n.y >= GRID_HEIGHT:
 				continue
-
-			if grid[n.y][n.x].size() == 1:
+			
+			var neighbour_options = grid[n.y][n.x]
+			if neighbour_options.size() == 1:
 				continue
-
+##TODO
 			var allowed = []
 			for n_opt in grid[n.y][n.x]:
 				for c_opt in current_options:
-					for poss in c_opt["socket"][dir]:
-						if poss in n_opt["socket"][(dir+2)%4]:
-							allowed.append(n_opt)
-							break
+					#for n_socket in n_opt["socket"][(dir+2)%4]
+					if n_opt["type"] in c_opt["socket"][dir]:
+						allowed.append(n_opt)
+						break
+
 
 			if allowed.is_empty():
 				return false
