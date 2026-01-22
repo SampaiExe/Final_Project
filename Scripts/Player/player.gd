@@ -1,10 +1,13 @@
 extends Node2D
 
 
-
+@export var DEBUG:bool = false
 	
 var elbow1:Vector2
 var elbow2:Vector2
+
+var footBottom1:Vector2
+var footBottom2:Vector2
 
 @export var SPEED = 500.0
 @export var JUMP_VELOCITY = -800.0
@@ -17,13 +20,17 @@ var TagetPosOffset:Vector2
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	footBottom1 = $LegLerpPos.position
+	footBottom2 = $LegLerpPos2.position
 	TagetPosOffset = $LegTargetPos.position
 	
 	pass # Replace with function body.
 
 func _physics_process(delta):
-	print($Body.is_on_floor())
-	print($Body.get_gravity())
+	
+	if DEBUG: 
+		print($Body.is_on_floor())
+		print($Body.get_gravity())
 	
 	# Add the gravity.
 	if not $Body.is_on_floor():
@@ -39,72 +46,75 @@ func _physics_process(delta):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	
-	if limb_length + limb_length < $Foot1.position.distance_to($Body.position) or $Body.position.y > $LegLerpPos.position.y:
+	if limb_length + limb_length < footBottom1.distance_to($Body.position) or $Body.position.y > $LegLerpPos.position.y:
 		$LegLerpPos.position = $LegTargetPos.position
 		pass
-	if limb_length + limb_length < $Foot2.position.distance_to($Body.position) or $Body.position.y > $LegLerpPos2.position.y:
+	if limb_length + limb_length < footBottom2.distance_to($Body.position) or $Body.position.y > $LegLerpPos2.position.y:
 		if $LegTargetPos.position.distance_to($LegLerpPos.position) > 200.0:
 			$LegLerpPos2.position = $LegTargetPos.position
 		else:
 			$LegLerpPos2.position.x = $LegTargetPos.position.x - 100.0
 			$LegLerpPos2.position.y = $LegTargetPos.position.y
 		pass
-	$Foot1.position = lerp($Foot1.position, $LegLerpPos.position, 10*delta)
-	$Foot2.position = lerp($Foot2.position, $LegLerpPos2.position, 10*delta)
+		
+	#elbow calc
+	elbow1 = $Body.position + magic_IK_Function(limb_length, limb_length, footBottom1-$Body.position, -1.0)
+	elbow2 = $Body.position + magic_IK_Function(limb_length, limb_length, footBottom2-$Body.position, -1.0)
 	
+	#bottom feet position + lerp 
+	$Foot1.position = elbow1
+	footBottom1 = lerp(footBottom1, $LegLerpPos.position, 10*delta)
 	
-
+	$Foot2.position = elbow2
+	footBottom2 = lerp(footBottom2, $LegLerpPos2.position, 10*delta)
+	
+	#updating target feet position location
 	$LegTargetPos.position = Vector2($Body.position.x + TagetPosOffset.x, $Body.position.y + TagetPosOffset.y)
 	
-	#$Body.position = get_global_mouse_position()
 	
-	#$Body.position.y = lerp($Body.position.y-2, $LegTargetPos.position.y, 5*delta)
-	
-	elbow1 = $Body.position + magic_IK_Function(limb_length, limb_length, $Foot1.position-$Body.position, -1.0)
-	elbow2 = $Body.position + magic_IK_Function(limb_length, limb_length, $Foot2.position-$Body.position, -1.0)
-	queue_redraw()
+	if DEBUG: queue_redraw()
 	
 	
-	#rotate sprites feet2
-	var lowerAngleFoot2 = (elbow2 - $Foot2.position).angle()
-	$Foot2/Sprite2D.rotation = PI/2+lowerAngleFoot2
+	#rotate sprites LEG2
+	var lowerAngleFoot2 = (elbow2 - footBottom2).angle()
+	$Foot2/Sprite2D.rotation = lerp($Foot2/Sprite2D.rotation, PI/2+lowerAngleFoot2, 10*delta) 
 	
 	var upperAngleFoot2 = ($Body.position - elbow2).angle()
 	$FootUp2.position = elbow2
 	$FootUp2/Sprite2D.rotation = PI/2+upperAngleFoot2
 	
-	
-	#rotate sprites feets1
-	var lowerAngleFoot1 = (elbow1 - $Foot1.position).angle()
-	$Foot1/Sprite2D.rotation = PI/2+lowerAngleFoot1
+	#rotate sprites LEG1
+	var lowerAngleFoot1 = (elbow1 - footBottom1).angle()
+	$Foot1/Sprite2D.rotation = lerp($Foot1/Sprite2D.rotation,  PI/2+lowerAngleFoot1, 10*delta)
 	
 	var upperAngleFoot1 = ($Body.position - elbow1).angle()
 	$FootUp1.position = elbow1
 	$FootUp1/Sprite2D.rotation = PI/2+upperAngleFoot1
 
-	
 	pass
 	
-
 func _draw() -> void:
-	draw_lerp_free()
+	if DEBUG: draw_lerp_free()
 
 func draw_lerp_free():
 	var body_pos = $Body.position
 	# limb lines
-	#draw_line(body_pos, elbow1, Color.YELLOW, 2.0)
-	#draw_line(elbow1, $Foot1.position, Color.YELLOW, 2.0)
+	draw_line(body_pos, elbow1, Color.YELLOW, 2.0)
+	draw_line(elbow1, $Foot1.position, Color.YELLOW, 2.0)
 	
-	#draw_line(body_pos, elbow2, Color.YELLOW, 2.0)
-	#draw_line(elbow2, $Foot2.position, Color.YELLOW, 2.0)
+	draw_line(body_pos, elbow2, Color.YELLOW, 2.0)
+	draw_line(elbow2, $Foot2.position, Color.YELLOW, 2.0)
 	
 	# feet
-	#draw_circle($Foot1.position, 25.0, Color.WHITE)
-	#draw_circle($Foot2.position, 25.0, Color.WHITE)
+	draw_circle($Foot1.position, 25.0, Color.WHITE)
+	draw_circle($Foot2.position, 25.0, Color.WHITE)
 	# body
-	#draw_circle(body_pos, 50.0, Color.WHITE)
-	# target step
-	#draw_circle(target_step, 20.0, Color.YELLOW)
+	draw_circle(body_pos, 50.0, Color.WHITE)
+
+	
+	draw_circle(elbow2, 20.0, Color.YELLOW)
+	
+	draw_circle(elbow1, 20.0, Color.YELLOW)
 
 
 

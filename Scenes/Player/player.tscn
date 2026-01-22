@@ -9,6 +9,21 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xpcdj"]
 height = 61.199997
 
+[sub_resource type="Animation" id="Animation_mtuoh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="Animation" id="Animation_xpcdj"]
 resource_name = "new_animation"
 length = 0.5
@@ -26,21 +41,6 @@ tracks/0/keys = {
 "values": [1, 0]
 }
 
-[sub_resource type="Animation" id="Animation_mtuoh"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_htcer"]
 _data = {
 &"RESET": SubResource("Animation_mtuoh"),
@@ -54,38 +54,41 @@ script = ExtResource("1_uvnfx")
 position = Vector2(268.26, 234.82)
 
 [node name="Sprite2D" type="Sprite2D" parent="LegTargetPos"]
+visible = false
 scale = Vector2(0.18749997, 0.14843744)
 texture = ExtResource("2_a3d8c")
 
 [node name="LegLerpPos" type="Marker2D" parent="."]
-position = Vector2(110.795, 187)
+position = Vector2(122.83, 215.67)
 
 [node name="Sprite2D" type="Sprite2D" parent="LegLerpPos"]
+visible = false
 modulate = Color(0.6189569, 0, 0.31415492, 1)
 scale = Vector2(0.6969141, 0.6523437)
 texture = ExtResource("2_a3d8c")
 
 [node name="LegLerpPos2" type="Marker2D" parent="."]
-position = Vector2(-110, 183)
+position = Vector2(-96.985, 213.54)
 
 [node name="Sprite2D" type="Sprite2D" parent="LegLerpPos2"]
+visible = false
 modulate = Color(0.6189569, 0, 0.31415492, 1)
 scale = Vector2(0.6969141, 0.6523437)
 texture = ExtResource("2_a3d8c")
 
 [node name="Foot1" type="Marker2D" parent="."]
-position = Vector2(3.0000076, 152)
+position = Vector2(-254.845, 302.69)
 
 [node name="Sprite2D" type="Sprite2D" parent="Foot1"]
 texture_filter = 1
 scale = Vector2(9.28, 9.28)
 texture = ExtResource("3_xpcdj")
-offset = Vector2(17.815, -26.44)
+offset = Vector2(18.365, -10.54)
 hframes = 17
 frame = 2
 
 [node name="FootUp1" type="Marker2D" parent="."]
-position = Vector2(3.0000076, 152)
+position = Vector2(-275.16, 152)
 
 [node name="Sprite2D" type="Sprite2D" parent="FootUp1"]
 texture_filter = 1
@@ -96,13 +99,13 @@ hframes = 17
 frame = 2
 
 [node name="Foot2" type="Marker2D" parent="."]
-position = Vector2(3.0000076, 152)
+position = Vector2(-345.665, 310.17)
 
 [node name="Sprite2D" type="Sprite2D" parent="Foot2"]
 texture_filter = 1
 scale = Vector2(9.28, 9.28)
 texture = ExtResource("3_xpcdj")
-offset = Vector2(17.815, -26.44)
+offset = Vector2(18.365, -10.54)
 hframes = 17
 frame = 2
 
@@ -120,7 +123,7 @@ scale_amount_max = 0.1
 color = Color(0.99999994, 0.28730667, 0.22523719, 1)
 
 [node name="FootUp2" type="Marker2D" parent="."]
-position = Vector2(50.23, 54.51)
+position = Vector2(-347.68, 145.92)
 
 [node name="Sprite2D" type="Sprite2D" parent="FootUp2"]
 texture_filter = 1
