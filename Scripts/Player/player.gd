@@ -2,7 +2,9 @@ extends Node2D
 
 
 @export var DEBUG:bool = false
-	
+
+var dead := false
+
 var elbow1:Vector2
 var elbow2:Vector2
 
@@ -20,6 +22,7 @@ var TagetPosOffset:Vector2
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	#get_tree().create_timer(3.0).timeout.connect(die)
 	footBottom1 = $LegLerpPos.position
 	footBottom2 = $LegLerpPos2.position
 	TagetPosOffset = $LegTargetPos.position
@@ -36,7 +39,7 @@ func _physics_process(delta):
 	if not $Body.is_on_floor():
 		$Body.velocity += $Body.get_gravity() * delta
 		
-	if Input.is_action_just_pressed("ui_accept") and $Body.is_on_floor():
+	if !dead and Input.is_action_just_pressed("ui_accept") and $Body.is_on_floor():
 		$Body.velocity.y = JUMP_VELOCITY
 		
 	$Body.velocity.x = SPEED
@@ -134,3 +137,12 @@ func magic_IK_Function(l1:float, l2:float, local_end_affector:Vector2, elbow_dir
 	var angle = elbow_direction_sign * elbow_angle_relative + local_end_affector.angle()
 	return Vector2(cos(angle), sin(angle)) * l1
 	
+
+func die():
+	dead = true
+	SPEED = 0
+	$Body/AnimationPlayer.play("DIE")
+	$FootUp2/Sprite2D.visible = false
+	$Foot2/Sprite2D.visible = false
+	$FootUp1/Sprite2D.visible = false
+	$Foot1/Sprite2D.visible = false
