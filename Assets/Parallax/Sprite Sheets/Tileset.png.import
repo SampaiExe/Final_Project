@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cbex7r2hffy88"
-path="res://.godot/imported/Bubble Maker Orb thing (8x20).png-e286b6f367f3caece3a006c930daf0bd.ctex"
+uid="uid://xc3jkp6bkkh7"
+path="res://.godot/imported/Tileset.png-317c9e5ac0759ec6835ae47f5a235b1c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Parallax/Sprite Sheets/Bubble Maker Orb thing (8x20).png"
-dest_files=["res://.godot/imported/Bubble Maker Orb thing (8x20).png-e286b6f367f3caece3a006c930daf0bd.ctex"]
+source_file="res://Assets/Parallax/Sprite Sheets/Tileset.png"
+dest_files=["res://.godot/imported/Tileset.png-317c9e5ac0759ec6835ae47f5a235b1c.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bkrs8ecf0xonv"
-path="res://.godot/imported/2 -Background - Mountains (2).png-11aaa25afeabba21d745f920d62ef8ac.ctex"
+uid="uid://dhqpmj02gpj0s"
+path="res://.godot/imported/Orbs16x16.png-d003c165bc527b1a45e4b87c33568de4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Parallax/2 -Background - Mountains (2).png"
-dest_files=["res://.godot/imported/2 -Background - Mountains (2).png-11aaa25afeabba21d745f920d62ef8ac.ctex"]
+source_file="res://Assets/Parallax/Sprite Sheets/Orbs16x16.png"
+dest_files=["res://.godot/imported/Orbs16x16.png-d003c165bc527b1a45e4b87c33568de4.ctex"]
 
 [params]
 

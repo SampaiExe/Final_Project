@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dg84ywqlmg70n"
-path="res://.godot/imported/Small Lightning (32x32).png-83e2447ee39f1a0ba704e47e757df3ea.ctex"
+uid="uid://dofmkiyqb8pya"
+path="res://.godot/imported/Heart Hoarder Statue2.png-df742223bd2bbccee96ce9791ed0e3a8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Parallax/Sprite Sheets/Small Lightning (32x32).png"
-dest_files=["res://.godot/imported/Small Lightning (32x32).png-83e2447ee39f1a0ba704e47e757df3ea.ctex"]
+source_file="res://Assets/Parallax/Sprite Sheets/Heart Hoarder Statue2.png"
+dest_files=["res://.godot/imported/Heart Hoarder Statue2.png-df742223bd2bbccee96ce9791ed0e3a8.ctex"]
 
 [params]
 

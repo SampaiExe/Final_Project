@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dhqpmj02gpj0s"
-path="res://.godot/imported/Orbs16x16.png-242c66eb2469d8fe706ee41711817efc.ctex"
+uid="uid://c18o44p0lxdvu"
+path="res://.godot/imported/Guardian Statue2.png-f31b0e47607088dfbeb0282e30a79b3d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Orbs16x16.png"
-dest_files=["res://.godot/imported/Orbs16x16.png-242c66eb2469d8fe706ee41711817efc.ctex"]
+source_file="res://Assets/Parallax/Sprite Sheets/Guardian Statue2.png"
+dest_files=["res://.godot/imported/Guardian Statue2.png-f31b0e47607088dfbeb0282e30a79b3d.ctex"]
 
 [params]
 

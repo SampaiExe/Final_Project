@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://4viltpxyym30"
-path="res://.godot/imported/16x16 spritesheet.png-055b0f37f53e0a82867d0e24783eba73.ctex"
+uid="uid://douvn63bmhrmu"
+path="res://.godot/imported/Tree Tileset4.png-544eb763fe372b1e8cf9c3048597b15d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/16x16 spritesheet.png"
-dest_files=["res://.godot/imported/16x16 spritesheet.png-055b0f37f53e0a82867d0e24783eba73.ctex"]
+source_file="res://Assets/Parallax/Sprite Sheets/Tree Tileset4.png"
+dest_files=["res://.godot/imported/Tree Tileset4.png-544eb763fe372b1e8cf9c3048597b15d.ctex"]
 
 [params]
 

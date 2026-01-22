@@ -357,17 +357,15 @@ func propagate(start: Vector2i) -> bool:
 				continue
 			
 			var neighbour_options = grid[n.y][n.x]
-			if neighbour_options.size() == 1:
-				continue
-##TODO
+			#if neighbour_options.size() == 1:
+				#continue
+
 			var allowed = []
 			for n_opt in grid[n.y][n.x]:
 				for c_opt in current_options:
-					#for n_socket in n_opt["socket"][(dir+2)%4]
 					if n_opt["type"] in c_opt["socket"][dir]:
 						allowed.append(n_opt)
 						break
-
 
 			if allowed.is_empty():
 				return false

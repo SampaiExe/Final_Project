@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bdugkwuy51awc"
-path="res://.godot/imported/Large Lightning (64x48).png-a0016cd5ad8472c23f59578873f40332.ctex"
+uid="uid://dpna8rr5gtsfh"
+path="res://.godot/imported/Statue 128x112.png-54e50b86c75ee228141c83119a3dcedb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Parallax/Sprite Sheets/Large Lightning (64x48).png"
-dest_files=["res://.godot/imported/Large Lightning (64x48).png-a0016cd5ad8472c23f59578873f40332.ctex"]
+source_file="res://Assets/Parallax/Sprite Sheets/Statue 128x112.png"
+dest_files=["res://.godot/imported/Statue 128x112.png-54e50b86c75ee228141c83119a3dcedb.ctex"]
 
 [params]
 

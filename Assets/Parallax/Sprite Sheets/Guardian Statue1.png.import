@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bmhpmx6vlb4if"
-path="res://.godot/imported/4- Ground (4).png-27a9e81fdf192655373533f3e52b27bf.ctex"
+uid="uid://dcpaqdkafeb80"
+path="res://.godot/imported/Guardian Statue1.png-90bb15e38d1d8b1a91f7af79d7554a0d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Parallax/4- Ground (4).png"
-dest_files=["res://.godot/imported/4- Ground (4).png-27a9e81fdf192655373533f3e52b27bf.ctex"]
+source_file="res://Assets/Parallax/Sprite Sheets/Guardian Statue1.png"
+dest_files=["res://.godot/imported/Guardian Statue1.png-90bb15e38d1d8b1a91f7af79d7554a0d.ctex"]
 
 [params]
 

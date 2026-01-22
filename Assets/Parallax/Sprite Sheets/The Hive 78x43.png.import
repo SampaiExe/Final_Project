@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c4meu71up3q11"
-path="res://.godot/imported/example1.png-32c6b635062ab72464fb849f6ff19995.ctex"
+uid="uid://bdekjcqqppi4e"
+path="res://.godot/imported/The Hive 78x43.png-c3b6e80fb6f1f86b3fb1063c4761f9e5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Parallax/example1.png"
-dest_files=["res://.godot/imported/example1.png-32c6b635062ab72464fb849f6ff19995.ctex"]
+source_file="res://Assets/Parallax/Sprite Sheets/The Hive 78x43.png"
+dest_files=["res://.godot/imported/The Hive 78x43.png-c3b6e80fb6f1f86b3fb1063c4761f9e5.ctex"]
 
 [params]
 

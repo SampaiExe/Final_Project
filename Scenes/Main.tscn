@@ -1,16 +1,18 @@
-[gd_scene load_steps=11 format=3 uid="uid://44gyi4et5eug"]
+[gd_scene load_steps=13 format=3 uid="uid://44gyi4et5eug"]
 
-[ext_resource type="Texture2D" uid="uid://cqdigm2mcxkyn" path="res://Assets/Parallax/7 sky1.png" id="1_lgr22"]
-[ext_resource type="Script" uid="uid://dayxy5q6heb4l" path="res://Scripts/WFC.gd" id="1_trn2v"]
-[ext_resource type="Texture2D" uid="uid://dky7lyd1jk7hm" path="res://Assets/Parallax/5 BG gears1.png" id="2_trn2v"]
-[ext_resource type="Texture2D" uid="uid://clrjsdv57qxgw" path="res://Assets/Parallax/4 mid1.png" id="3_03owx"]
-[ext_resource type="Texture2D" uid="uid://bc4ho0hef7v4c" path="res://Assets/Parallax/3 close but further1.png" id="4_wkp8b"]
-[ext_resource type="Texture2D" uid="uid://dd153hlytlsd2" path="res://Assets/Parallax/2 close again1.png" id="5_20pc6"]
-[ext_resource type="Texture2D" uid="uid://cgo7dntqix7fu" path="res://Assets/Parallax/1 close1.png" id="6_5vvyt"]
-[ext_resource type="Texture2D" uid="uid://bdw2y4t4e7kxb" path="res://Assets/Parallax/Sprite Sheets/gears-Sheet.png" id="7_c6i3y"]
+[ext_resource type="Script" uid="uid://dayxy5q6heb4l" path="res://Scripts/WFC.gd" id="1_vy5pj"]
+[ext_resource type="Texture2D" uid="uid://cqdigm2mcxkyn" path="res://Assets/Parallax/7 sky1.png" id="2_bmxlf"]
+[ext_resource type="Texture2D" uid="uid://dky7lyd1jk7hm" path="res://Assets/Parallax/5 BG gears1.png" id="3_4kpch"]
+[ext_resource type="Texture2D" uid="uid://clrjsdv57qxgw" path="res://Assets/Parallax/4 mid1.png" id="4_grg3l"]
+[ext_resource type="Texture2D" uid="uid://bc4ho0hef7v4c" path="res://Assets/Parallax/3 close but further1.png" id="5_frkhe"]
+[ext_resource type="Texture2D" uid="uid://dd153hlytlsd2" path="res://Assets/Parallax/2 close again1.png" id="6_1p5hy"]
+[ext_resource type="Texture2D" uid="uid://cgo7dntqix7fu" path="res://Assets/Parallax/1 close1.png" id="7_h1m7h"]
+[ext_resource type="Texture2D" uid="uid://bdw2y4t4e7kxb" path="res://Assets/Parallax/Sprite Sheets/gears-Sheet.png" id="8_erwvk"]
+[ext_resource type="Texture2D" uid="uid://dvps1p2c87oxy" path="res://Assets/Parallax/5- Fog (5).png" id="9_vy5pj"]
+[ext_resource type="Script" uid="uid://dkybk3xhh6ny6" path="res://camera_2d.gd" id="10_bmxlf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c2ibq"]
-texture = ExtResource("7_c6i3y")
+texture = ExtResource("8_erwvk")
 texture_region_size = Vector2i(32, 32)
 6:1/0 = 0
 6:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
@@ -58,66 +60,88 @@ physics_layer_0/collision_layer = 128
 sources/0 = SubResource("TileSetAtlasSource_c2ibq")
 
 [node name="Node2D" type="Node2D"]
-script = ExtResource("1_trn2v")
+script = ExtResource("1_vy5pj")
 
 [node name="Parallax" type="Node2D" parent="."]
-position = Vector2(288, -101.42)
+position = Vector2(576, 384)
 
 [node name="Sky" type="Parallax2D" parent="Parallax"]
+scale = Vector2(2, 2)
 scroll_scale = Vector2(0.1, 1)
 repeat_size = Vector2(576, 0)
+repeat_times = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax/Sky"]
 texture_filter = 1
 rotation = 0.0011376928
-texture = ExtResource("1_lgr22")
+texture = ExtResource("2_bmxlf")
 
 [node name="Far" type="Parallax2D" parent="Parallax"]
+scale = Vector2(2, 2)
 scroll_scale = Vector2(0.2, 1)
 repeat_size = Vector2(576, 0)
+repeat_times = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax/Far"]
 texture_filter = 1
-texture = ExtResource("2_trn2v")
+texture = ExtResource("3_4kpch")
 
 [node name="Mid" type="Parallax2D" parent="Parallax"]
+scale = Vector2(2, 2)
 scroll_scale = Vector2(0.3, 1)
 repeat_size = Vector2(576, 0)
+repeat_times = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax/Mid"]
 texture_filter = 1
-texture = ExtResource("3_03owx")
+texture = ExtResource("4_grg3l")
 
 [node name="Kinda Close" type="Parallax2D" parent="Parallax"]
+scale = Vector2(2, 2)
 scroll_scale = Vector2(0.5, 1)
 repeat_size = Vector2(576, 0)
+repeat_times = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax/Kinda Close"]
 texture_filter = 1
-texture = ExtResource("4_wkp8b")
+texture = ExtResource("5_frkhe")
 
 [node name="Close1" type="Parallax2D" parent="Parallax"]
+scale = Vector2(2, 2)
 scroll_scale = Vector2(0.7, 1)
 repeat_size = Vector2(576, 0)
+repeat_times = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax/Close1"]
 texture_filter = 1
-texture = ExtResource("5_20pc6")
+texture = ExtResource("6_1p5hy")
 
 [node name="Close2" type="Parallax2D" parent="Parallax"]
+scale = Vector2(2, 2)
 scroll_scale = Vector2(0.7, 1)
-scroll_offset = Vector2(22, -8)
 repeat_size = Vector2(576, 0)
+repeat_times = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax/Close2"]
 texture_filter = 1
-texture = ExtResource("6_5vvyt")
+texture = ExtResource("7_h1m7h")
+
+[node name="Close3" type="Parallax2D" parent="Parallax"]
+scale = Vector2(2, 2)
+scroll_scale = Vector2(0.7, 1)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/Close3"]
+texture_filter = 1
+texture = ExtResource("9_vy5pj")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 texture_filter = 1
+position = Vector2(607, 579)
+scale = Vector2(3, 3)
 tile_map_data = PackedByteArray(0, 0, 13, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0)
 tile_set = SubResource("TileSet_j4qnp")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(143, -38)
-zoom = Vector2(2, 2)
+position = Vector2(578, 384)
+script = ExtResource("10_bmxlf")
