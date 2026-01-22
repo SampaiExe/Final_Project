@@ -1,13 +1,43 @@
-[gd_scene load_steps=11 format=3 uid="uid://sqhyarub2ybi"]
+[gd_scene load_steps=12 format=3 uid="uid://sqhyarub2ybi"]
 
 [ext_resource type="Script" uid="uid://c43cxej6lfxp7" path="res://Scripts/Player/player.gd" id="1_uvnfx"]
 [ext_resource type="Texture2D" uid="uid://cpbides33mcu2" path="res://icon.svg" id="2_a3d8c"]
 [ext_resource type="Texture2D" uid="uid://bpg8didr7oick" path="res://Assets/Deer Sprite-Sheet.png" id="3_xpcdj"]
 [ext_resource type="Texture2D" uid="uid://gulx5lx3elqn" path="res://Assets/spotlight_01_a.png" id="4_htcer"]
 [ext_resource type="Script" uid="uid://ds52ao67g7jiq" path="res://Scripts/Player/BodyAnimation.gd" id="4_mtuoh"]
+[ext_resource type="Script" uid="uid://dyvomjbgdyyap" path="res://Scenes/Player/camera_2d.gd" id="6_dd0ac"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xpcdj"]
 height = 61.199997
+
+[sub_resource type="Animation" id="Animation_htcer"]
+resource_name = "DIE"
+length = 1.4
+step = 0.33333334
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [3, 4, 5, 7, 8, 9, 10, 12, 13, 14, 15]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.099, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-0.07, -2.635), Vector2(-0.07, -2.635), Vector2(15.82, -27.375), Vector2(15.82, -14.66)]
+}
 
 [sub_resource type="Animation" id="Animation_mtuoh"]
 length = 0.001
@@ -51,35 +81,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [1, 0]
-}
-
-[sub_resource type="Animation" id="Animation_htcer"]
-resource_name = "DIE"
-length = 1.4
-step = 0.33333334
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [3, 4, 5, 7, 8, 9, 10, 12, 13, 14, 15]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:position")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.099, 0.1, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [Vector2(-0.07, -2.635), Vector2(-0.07, -2.635), Vector2(15.82, -27.375), Vector2(15.82, -14.66)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_htcer"]
@@ -178,6 +179,7 @@ frame = 2
 [node name="Body" type="CharacterBody2D" parent="."]
 texture_filter = 1
 scale = Vector2(5, 5)
+collision_mask = 128
 
 [node name="Sprite2D" type="Sprite2D" parent="Body"]
 position = Vector2(-0.07, -2.635)
@@ -186,11 +188,6 @@ texture = ExtResource("3_xpcdj")
 offset = Vector2(-6.145, -2.92)
 hframes = 17
 script = ExtResource("4_mtuoh")
-
-[node name="Camera2D" type="Camera2D" parent="Body"]
-position = Vector2(47.99997, 24.600006)
-scale = Vector2(2.7234044, 3.1219513)
-zoom = Vector2(0.295, 0.295)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
 position = Vector2(-0.20000225, 11.4)
@@ -201,3 +198,8 @@ libraries = {
 &"": SubResource("AnimationLibrary_htcer")
 }
 autoplay = "new_animation"
+
+[node name="Camera2D" type="Camera2D" parent="Body"]
+scale = Vector2(0.19999999, 0.19999999)
+offset = Vector2(0, -154.285)
+script = ExtResource("6_dd0ac")

@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cgo7dntqix7fu" path="res://Assets/Parallax/1 close1.png" id="7_h1m7h"]
 [ext_resource type="Texture2D" uid="uid://bdw2y4t4e7kxb" path="res://Assets/Parallax/Sprite Sheets/gears-Sheet.png" id="8_erwvk"]
 [ext_resource type="Texture2D" uid="uid://dvps1p2c87oxy" path="res://Assets/Parallax/5- Fog (5).png" id="9_vy5pj"]
-[ext_resource type="Script" uid="uid://dkybk3xhh6ny6" path="res://camera_2d.gd" id="10_bmxlf"]
+[ext_resource type="PackedScene" uid="uid://sqhyarub2ybi" path="res://Scenes/Player/player.tscn" id="11_4kpch"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c2ibq"]
 texture = ExtResource("8_erwvk")
@@ -142,6 +142,6 @@ scale = Vector2(3, 3)
 tile_map_data = PackedByteArray(0, 0, 13, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0)
 tile_set = SubResource("TileSet_j4qnp")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(578, 384)
-script = ExtResource("10_bmxlf")
+[node name="Player" parent="." instance=ExtResource("11_4kpch")]
+position = Vector2(578.61, 540)
+scale = Vector2(0.5, 0.5)
