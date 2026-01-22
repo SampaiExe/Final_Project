@@ -11,8 +11,8 @@ var elbow2:Vector2
 var footBottom1:Vector2
 var footBottom2:Vector2
 
-@export var SPEED = 500.0
-@export var JUMP_VELOCITY = -800.0
+@export var SPEED = 300.0
+@export var JUMP_VELOCITY = -400.0
 
 
 var limb_length = 150.0
