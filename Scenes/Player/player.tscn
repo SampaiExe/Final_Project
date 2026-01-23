@@ -92,12 +92,12 @@ _data = {
 
 [node name="Player" type="Node2D"]
 script = ExtResource("1_uvnfx")
+DEBUG = true
 
 [node name="LegTargetPos" type="Marker2D" parent="."]
 position = Vector2(268.26, 234.82)
 
 [node name="Sprite2D" type="Sprite2D" parent="LegTargetPos"]
-visible = false
 scale = Vector2(0.18749997, 0.14843744)
 texture = ExtResource("2_a3d8c")
 
@@ -105,7 +105,6 @@ texture = ExtResource("2_a3d8c")
 position = Vector2(122.83, 215.67)
 
 [node name="Sprite2D" type="Sprite2D" parent="LegLerpPos"]
-visible = false
 modulate = Color(0.6189569, 0, 0.31415492, 1)
 scale = Vector2(0.6969141, 0.6523437)
 texture = ExtResource("2_a3d8c")
@@ -114,7 +113,6 @@ texture = ExtResource("2_a3d8c")
 position = Vector2(-96.985, 213.54)
 
 [node name="Sprite2D" type="Sprite2D" parent="LegLerpPos2"]
-visible = false
 modulate = Color(0.6189569, 0, 0.31415492, 1)
 scale = Vector2(0.6969141, 0.6523437)
 texture = ExtResource("2_a3d8c")

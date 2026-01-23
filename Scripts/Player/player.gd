@@ -14,6 +14,8 @@ var footBottom2:Vector2
 @export var SPEED = 300.0
 @export var JUMP_VELOCITY = -400.0
 
+@export var global_y_death_height = 650.0
+
 
 var limb_length = 150.0
 var bend_sign = 0
@@ -26,6 +28,10 @@ func _ready() -> void:
 	footBottom1 = $LegLerpPos.position
 	footBottom2 = $LegLerpPos2.position
 	TagetPosOffset = $LegTargetPos.position
+	if !DEBUG:
+		$LegTargetPos/Sprite2D.visible = false
+		$LegLerpPos/Sprite2D.visible = false
+		$LegLerpPos2/Sprite2D.visible = false
 	
 	pass # Replace with function body.
 
@@ -43,11 +49,13 @@ func _physics_process(delta):
 		$Body.velocity.y = JUMP_VELOCITY
 		
 	$Body.velocity.x = SPEED
-	$Body.move_and_slide()
+	if !dead: $Body.move_and_slide()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if global_y_death_height < $Body/Sprite2D.global_position.y:
+		die()
 	
 	if limb_length + limb_length < footBottom1.distance_to($Body.position) or $Body.position.y > $LegLerpPos.position.y:
 		$LegLerpPos.position = $LegTargetPos.position
@@ -139,10 +147,11 @@ func magic_IK_Function(l1:float, l2:float, local_end_affector:Vector2, elbow_dir
 	
 
 func die():
-	dead = true
-	SPEED = 0
-	$Body/AnimationPlayer.play("DIE")
-	$FootUp2/Sprite2D.visible = false
-	$Foot2/Sprite2D.visible = false
-	$FootUp1/Sprite2D.visible = false
-	$Foot1/Sprite2D.visible = false
+	if !dead:
+		dead = true
+		SPEED = 0
+		$Body/AnimationPlayer.play("DIE")
+		$FootUp2/Sprite2D.visible = false
+		$Foot2/Sprite2D.visible = false
+		$FootUp1/Sprite2D.visible = false
+		$Foot1/Sprite2D.visible = false

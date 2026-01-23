@@ -22,35 +22,39 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	
 	#in air sprite tilt
-	var in_air = not $"..".is_on_floor()
-	var vy = $"..".velocity.y
-	var target_tilt := 0.0
-	if in_air:
+	if !$"../..".dead:
+		var in_air = not $"..".is_on_floor()
+		var vy = $"..".velocity.y
+		var target_tilt := 0.0
+		if in_air:
 		# Map vy to [-1..1]-ish then to degrees
 		# tweak 600.0 depending on your jump speed, if we need to change it!!!! dont forget idk how fast the lvl will be
-		var normalized = clamp(vy / 600.0, -1.0, 1.0)
-		target_tilt = deg_to_rad(max_tilt_deg) * normalized
-	else:
-		target_tilt = 0.0
+			var normalized = clamp(vy / 600.0, -1.0, 1.0)
+			target_tilt = deg_to_rad(max_tilt_deg) * normalized
+		else:
+			target_tilt = 0.0
 	
-	$".".rotation = lerp($".".rotation, target_tilt, 1.0 - exp(-tilt_lerp_speed * delta))
+		$".".rotation = lerp($".".rotation, target_tilt, 1.0 - exp(-tilt_lerp_speed * delta))
 	
 	
 	
 	#in air bobing
-	var target_bob = 0.0
-	if in_air:
-		bob_t += delta * bob_speed
-		target_bob = sin(bob_t) * bob_amp
-	else:
-		# reset timer slowly so it doesn't pop
-		bob_t = lerp(bob_t, 0.0, 1.0 - exp(-8.0 * delta))
-		target_bob = 0.0
+		var target_bob = 0.0
+		if in_air:
+			bob_t += delta * bob_speed
+			target_bob = sin(bob_t) * bob_amp
+		else:
+			# reset timer slowly so it doesn't pop
+			bob_t = lerp(bob_t, 0.0, 1.0 - exp(-8.0 * delta))
+			target_bob = 0.0
 		
-	_apply_landing_dip(delta)
+		_apply_landing_dip(delta)
 	
 	# Apply offsets (bob + landing)
-	$".".position = base_gfx_pos + Vector2(0, target_bob + land_offset)
+		$".".position = base_gfx_pos + Vector2(0, target_bob + land_offset)
+	else:
+		$".".rotation= 0.0
+		# $".".rotation = lerp($".".rotation, 0.0, 0.1*delta)
 	
 var _was_on_floor := false
 func _apply_landing_dip(delta: float) -> void:
