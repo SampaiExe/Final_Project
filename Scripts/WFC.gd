@@ -295,7 +295,14 @@ func _ready():
 	draw_grid()
 	last_cells = get_right_edge()
 
+func _physics_process(delta: float) -> void:
+	$Control.global_position = Vector2($Player/Body/Camera2D.global_position.x - 576, $Player/Body/Camera2D.global_position.y - 530 )
+
 func _process(delta: float) -> void:
+	#incerse score idk if this works 
+	
+	$Control.setScore(Globals.score)
+	
 	if int($"Player/Body".global_position.x / chunk_width) >= current_chunk - 1:
 		spawn_chunk()
 	pass
@@ -503,3 +510,21 @@ func get_tile(name: String):
 			return tile
 	return null
 #endregion
+
+
+func _on_control_start_button_pressed() -> void:
+	Globals.score = 0
+	$Player.SPEED = 300.0
+	get_tree().create_timer(0.2).timeout.connect(increaseScore)
+	pass # Replace with function body.
+
+func increaseScore():
+	Globals.score += 1
+	if !$Player.dead:
+		get_tree().create_timer(0.2).timeout.connect(increaseScore)
+	
+func _on_player_player_died() -> void:
+	if Globals.score > Globals.highscore:
+		Globals.highscore = Globals.score
+	$Control.setHighScore(Globals.highscore)
+	pass # Replace with function body.

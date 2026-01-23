@@ -1,5 +1,5 @@
 extends Node2D
-
+signal PlayerDied
 
 @export var DEBUG:bool = false
 
@@ -11,7 +11,7 @@ var elbow2:Vector2
 var footBottom1:Vector2
 var footBottom2:Vector2
 
-@export var SPEED = 300.0
+@export var SPEED = 0
 @export var JUMP_VELOCITY = -400.0
 
 @export var global_y_death_height = 650.0
@@ -56,6 +56,7 @@ func _physics_process(delta):
 func _process(delta: float) -> void:
 	if global_y_death_height < $Body/Sprite2D.global_position.y:
 		die()
+		emit_signal("PlayerDied")
 	
 	if limb_length + limb_length < footBottom1.distance_to($Body.position) or $Body.position.y > $LegLerpPos.position.y:
 		$LegLerpPos.position = $LegTargetPos.position

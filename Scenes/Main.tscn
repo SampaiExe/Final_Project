@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://44gyi4et5eug"]
+[gd_scene load_steps=14 format=3 uid="uid://44gyi4et5eug"]
 
 [ext_resource type="Script" uid="uid://dayxy5q6heb4l" path="res://Scripts/WFC.gd" id="1_vy5pj"]
 [ext_resource type="Texture2D" uid="uid://cqdigm2mcxkyn" path="res://Assets/Parallax/7 sky1.png" id="2_bmxlf"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bdw2y4t4e7kxb" path="res://Assets/Parallax/Sprite Sheets/gears-Sheet.png" id="8_erwvk"]
 [ext_resource type="Texture2D" uid="uid://dvps1p2c87oxy" path="res://Assets/Parallax/5- Fog (5).png" id="9_vy5pj"]
 [ext_resource type="PackedScene" uid="uid://sqhyarub2ybi" path="res://Scenes/Player/player.tscn" id="11_4kpch"]
+[ext_resource type="PackedScene" uid="uid://dj5ps8p2476fv" path="res://UI.tscn" id="11_grg3l"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c2ibq"]
 texture = ExtResource("8_erwvk")
@@ -152,3 +153,16 @@ DEBUG = false
 position = Vector2(21.325, 700)
 
 [node name="Obstacles" type="Node2D" parent="."]
+
+[node name="Control" parent="." instance=ExtResource("11_grg3l")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 1152.0
+offset_bottom = 768.0
+grow_horizontal = 1
+grow_vertical = 1
+size_flags_vertical = 4
+
+[connection signal="PlayerDied" from="Player" to="." method="_on_player_player_died"]
+[connection signal="StartButtonPressed" from="Control" to="." method="_on_control_start_button_pressed"]

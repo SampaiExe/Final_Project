@@ -102,7 +102,7 @@ scale = Vector2(0.18749997, 0.14843744)
 texture = ExtResource("2_a3d8c")
 
 [node name="LegLerpPos" type="Marker2D" parent="."]
-position = Vector2(122.83, 215.67)
+position = Vector2(122.83, 229.375)
 
 [node name="Sprite2D" type="Sprite2D" parent="LegLerpPos"]
 modulate = Color(0.6189569, 0, 0.31415492, 1)
@@ -110,7 +110,7 @@ scale = Vector2(0.6969141, 0.6523437)
 texture = ExtResource("2_a3d8c")
 
 [node name="LegLerpPos2" type="Marker2D" parent="."]
-position = Vector2(-96.985, 213.54)
+position = Vector2(-96.985, 229.3)
 
 [node name="Sprite2D" type="Sprite2D" parent="LegLerpPos2"]
 modulate = Color(0.6189569, 0, 0.31415492, 1)
