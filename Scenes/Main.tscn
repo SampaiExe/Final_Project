@@ -138,7 +138,7 @@ texture = ExtResource("9_vy5pj")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 texture_filter = 1
-position = Vector2(607, 579)
+position = Vector2(387, 576)
 scale = Vector2(3, 3)
 tile_map_data = PackedByteArray(0, 0, 13, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0)
 tile_set = SubResource("TileSet_j4qnp")
@@ -150,3 +150,5 @@ DEBUG = false
 
 [node name="Marker2D" type="Marker2D" parent="."]
 position = Vector2(21.325, 700)
+
+[node name="Obstacles" type="Node2D" parent="."]

@@ -1,6 +1,6 @@
 extends Node2D
 
-const GRID_WIDTH = 25
+const GRID_WIDTH = 25   
 const GRID_HEIGHT = 2
 
 @onready var tilemap = $TileMapLayer
@@ -280,8 +280,12 @@ var base_tiles = [
 var all_tiles = base_tiles
 var grid = []
 var history = []
-
 var last_cells := []
+
+var current_chunk = 0
+var chunk_width = 96*GRID_WIDTH
+
+
 
 func _ready():
 	randomize()
@@ -290,15 +294,66 @@ func _ready():
 	#propagate_edges()
 	wfc()
 	draw_grid()
-	last_cells[0] = grid[1][24]
-	last_cells[1] = grid[2][24]
+	last_cells = get_right_edge()
 
+func _process(delta: float) -> void:
+	if int($"Player/Body".global_position.x / chunk_width) >= current_chunk - 1:
+		spawn_chunk()
+	pass
+	
+#region Chunk Logic
+func spawn_chunk():
+	var edge = get_right_edge()
+	if not generate_chunk(edge):
+		push_error("Chunk generation failed")
+		return
+
+	draw_grid_at_offset(current_chunk + 1)
+	current_chunk += 1
+
+func draw_grid_at_offset(chunk_index: int):
+	var x_offset = chunk_index * GRID_WIDTH
+
+	for y in range(GRID_HEIGHT):
+		for x in range(GRID_WIDTH):
+			if grid[y][x].size() == 1:
+				var t = grid[y][x][0]
+				tilemap.set_cell(Vector2i((x + x_offset), y), 0, t["atlas"], t["alt"])
+				#tilemap.set_cell(Vector2i(x, y), 0, t["atlas"], t["alt"])
+
+
+func init_chunk_from_edge(left_edge: Array):
+	grid.clear()
+
+	for y in range(GRID_HEIGHT):
+		grid.append([])
+		for x in range(GRID_WIDTH):
+			if x == 0:
+				grid[y].append([left_edge[y]])
+			else:
+				grid[y].append(all_tiles.duplicate(true))
+
+func generate_chunk(left_edge: Array) -> bool:
+	init_chunk_from_edge(left_edge)
+
+	for y in range(GRID_HEIGHT):
+		if not propagate(Vector2i(0, y)):
+			return false
+
+	wfc()
+	return true
+
+func cleanup_chunk(chunk_index):
+	for child in $Obstacles.get_children():
+		if child.global_position.x < (chunk_index - 2) * chunk_width:
+			child.queue_free()
+#endregion
+#region WFC
 func wfc():
 	while not is_fully_collapsed():
 		if not reduce_random_with_backtracking():
 			push_error("WFC failed — no valid solution")
 			return
-	print("done")
 
 func reduce_random_with_backtracking() -> bool:
 	var min_entropy = INF
@@ -382,7 +437,7 @@ func draw_grid():
 			if grid[y][x].size() == 1:
 				var t = grid[y][x][0]
 				tilemap.set_cell(Vector2i(x, y), 0, t["atlas"], t["alt"])
-
+#endregion
 #region Helper Functions
 func has_contradiction() -> bool:
 	for y in range(GRID_HEIGHT):
@@ -390,6 +445,13 @@ func has_contradiction() -> bool:
 			if grid[y][x].is_empty():
 				return true
 	return false
+
+func get_right_edge() -> Array:
+	var edge := []
+	for y in range(GRID_HEIGHT):
+		edge.append(grid[y][GRID_WIDTH - 1][0])
+	return edge
+
 
 func save_state():
 	history.append(grid.duplicate(true))
