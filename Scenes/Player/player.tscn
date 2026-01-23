@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://sqhyarub2ybi"]
+[gd_scene load_steps=14 format=3 uid="uid://sqhyarub2ybi"]
 
 [ext_resource type="Script" uid="uid://c43cxej6lfxp7" path="res://Scripts/Player/player.gd" id="1_uvnfx"]
 [ext_resource type="Texture2D" uid="uid://cpbides33mcu2" path="res://icon.svg" id="2_a3d8c"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://gulx5lx3elqn" path="res://Assets/spotlight_01_a.png" id="4_htcer"]
 [ext_resource type="Script" uid="uid://ds52ao67g7jiq" path="res://Scripts/Player/BodyAnimation.gd" id="4_mtuoh"]
 [ext_resource type="Script" uid="uid://dyvomjbgdyyap" path="res://Scenes/Player/camera_2d.gd" id="6_dd0ac"]
+[ext_resource type="AudioStream" uid="uid://btutquomsh2sj" path="res://Assets/gassy-footstep1.wav" id="7_0u5uq"]
+[ext_resource type="AudioStream" uid="uid://cxq0ew64wdpam" path="res://Assets/explosion_1.ogg" id="8_jlvik"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xpcdj"]
 height = 61.199997
@@ -201,3 +203,11 @@ autoplay = "new_animation"
 scale = Vector2(0.19999999, 0.19999999)
 offset = Vector2(0, -154.285)
 script = ExtResource("6_dd0ac")
+
+[node name="JumpSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_0u5uq")
+volume_db = -6.745
+
+[node name="Die Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_jlvik")
+volume_db = -23.774

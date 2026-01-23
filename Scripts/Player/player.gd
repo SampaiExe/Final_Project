@@ -46,6 +46,7 @@ func _physics_process(delta):
 		$Body.velocity += $Body.get_gravity() * delta
 		
 	if !dead and Input.is_action_just_pressed("ui_accept") and $Body.is_on_floor():
+		$JumpSound.play()
 		$Body.velocity.y = JUMP_VELOCITY
 		
 	$Body.velocity.x = SPEED
@@ -150,6 +151,7 @@ func die():
 	if !dead:
 		dead = true
 		SPEED = 0
+		$"Die Sound".play()
 		$Body/AnimationPlayer.play("DIE")
 		$FootUp2/Sprite2D.visible = false
 		$Foot2/Sprite2D.visible = false

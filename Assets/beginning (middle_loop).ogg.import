@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ba7jeor2by3p"
+path="res://.godot/imported/beginning (middle_loop).ogg-779ec6d02d8612fbaa551491af5c9023.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/beginning (middle_loop).ogg"
+dest_files=["res://.godot/imported/beginning (middle_loop).ogg-779ec6d02d8612fbaa551491af5c9023.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.08
+bpm=0.0
+beat_count=0
+bar_beats=4
