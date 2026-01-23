@@ -359,7 +359,7 @@ func cleanup_chunk(chunk_index):
 #region WFC
 func wfc():
 	while not is_fully_collapsed():
-		if not reduce_random_with_backtracking():
+		if not reduce_ra ndom_with_backtracking():
 			push_error("WFC failed — no valid solution")
 			return
 

@@ -10,7 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://bdw2y4t4e7kxb" path="res://Assets/Parallax/Sprite Sheets/gears-Sheet.png" id="8_erwvk"]
 [ext_resource type="Texture2D" uid="uid://dvps1p2c87oxy" path="res://Assets/Parallax/5- Fog (5).png" id="9_vy5pj"]
 [ext_resource type="PackedScene" uid="uid://sqhyarub2ybi" path="res://Scenes/Player/player.tscn" id="11_4kpch"]
-[ext_resource type="AudioStream" uid="uid://ba7jeor2by3p" path="res://Assets/beginning (middle_loop).ogg" id="11_grg3l"]
 [ext_resource type="PackedScene" uid="uid://dj5ps8p2476fv" path="res://UI.tscn" id="11_grg3l"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c2ibq"]
@@ -156,10 +155,10 @@ DEBUG = false
 position = Vector2(21.325, 700)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("11_grg3l")
 volume_db = -18.246
 autoplay = true
-[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="Obstacles2" type="Node2D" parent="."]
 
 [node name="Control" parent="." instance=ExtResource("11_grg3l")]
 anchors_preset = 0
