@@ -136,6 +136,8 @@ texture_filter = 1
 position = Vector2(0, 77)
 texture = ExtResource("9_vy5pj")
 
+[node name="Obstacles" type="Node2D" parent="."]
+
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 texture_filter = 1
 position = Vector2(387, 576)
@@ -150,5 +152,3 @@ DEBUG = false
 
 [node name="Marker2D" type="Marker2D" parent="."]
 position = Vector2(21.325, 700)
-
-[node name="Obstacles" type="Node2D" parent="."]
