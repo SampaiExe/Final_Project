@@ -111,7 +111,7 @@ var base_tiles = [
 			[],																																#UP
 			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS],	#RIGHT
 			[sockets.FLOOR_LOW, sockets.FLOOR_LOW_DIRT],																																#DOWN
-			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS],																																#LEFT
+			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS, sockets.TOP_DECOR_ROCK_LEFT_1],																																#LEFT
 		],
 		"type": sockets.TOP_PEBBLE,
 		"atlas": Vector2i(2,0), 		#Atlas Coords
@@ -124,7 +124,7 @@ var base_tiles = [
 			[],																																#UP
 			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS],	#RIGHT
 			[sockets.FLOOR_LOW, sockets.FLOOR_LOW_DIRT],																																#DOWN
-			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS],																																#LEFT
+			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS, sockets.TOP_DECOR_ROCK_LEFT_1],																																#LEFT
 		],
 		"type": sockets.TOP_PEBBLE,
 		"atlas": Vector2i(3,0), 		#Atlas Coords
@@ -136,8 +136,8 @@ var base_tiles = [
 		"socket": [
 			[],																																#UP
 			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS],	#RIGHT
-			[sockets.FLOOR_LOW, sockets.FLOOR_LOW_DIRT],																																#DOWN
-			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS],																																#LEFT
+			[sockets.GRASS_LOW_RIGHT_START, sockets.GRASS_LOW_MIDDLE, sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL, sockets.FLOOR_LOW_DIRT],																																#DOWN
+			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS, sockets.TOP_DECOR_ROCK_LEFT_1],																																#LEFT
 		],
 		"type": sockets.TOP_PEBBLE,
 		"atlas": Vector2i(12,0), 		#Atlas Coords
@@ -149,8 +149,8 @@ var base_tiles = [
 		"socket": [
 			[],																																#UP
 			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS],	#RIGHT
-			[sockets.FLOOR_LOW, sockets.FLOOR_LOW_DIRT],																																#DOWN
-			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS],																																#LEFT
+			[sockets.GRASS_LOW_RIGHT_START, sockets.GRASS_LOW_MIDDLE, sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL, sockets.FLOOR_LOW_DIRT],																																#DOWN
+			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS, sockets.TOP_DECOR_ROCK_LEFT_1],																																#LEFT
 		],
 		"type": sockets.TOP_PEBBLE,
 		"atlas": Vector2i(4,0), 		#Atlas Coords
@@ -161,7 +161,7 @@ var base_tiles = [
 		"name": "Top_Grass_1",
 		"socket": [
 			[],																																#UP
-			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS],	#RIGHT
+			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS, sockets.TOP_DECOR_ROCK_RIGHT_1],	#RIGHT
 			[sockets.GRASS_LOW_RIGHT_START, sockets.GRASS_LOW_MIDDLE, sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL, sockets.FLOOR_LOW_DIRT],																																#DOWN
 			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS, sockets.TOP_DECOR_ROCK_LEFT_3, sockets.TOP_DECOR_ROCK_RIGHT_3],																																#LEFT
 		],
@@ -174,7 +174,7 @@ var base_tiles = [
 		"name": "Top_Grass_2",
 		"socket": [
 			[],																																#UP
-			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS],	#RIGHT
+			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS, sockets.TOP_DECOR_ROCK_RIGHT_1],	#RIGHT
 			[sockets.GRASS_LOW_RIGHT_START, sockets.GRASS_LOW_MIDDLE, sockets.GRASS_LOW_LEFT_START, sockets.GRASS_LOW_LEFT_START_SMALL, sockets.FLOOR_LOW_DIRT],																																#DOWN
 			[sockets.TOP_EMPTY, sockets.TOP_PEBBLE, sockets.TOP_GRASS, sockets.TOP_DECOR_ROCK_LEFT_3, sockets.TOP_DECOR_ROCK_RIGHT_3],																																#LEFT
 		],
@@ -277,6 +277,9 @@ var base_tiles = [
 ]
 #endregion 
 #region INIT
+var obst_spawn_chance = 0.25
+var obstacle_scenes = preload("res://Scenes/statue_obstacle.tscn")
+
 var all_tiles = base_tiles
 var grid = []
 var history = []
@@ -288,9 +291,7 @@ var chunk_width = 96 * GRID_WIDTH
 
 func _ready():
 	randomize()
-	#all_tiles = gen_tiles(base_tiles)
 	init_grid()
-	#propagate_edges()
 	wfc()
 	draw_grid()
 	last_cells = get_right_edge()
@@ -309,17 +310,19 @@ func _process(delta: float) -> void:
 	
 #region Chunk Logic
 func spawn_chunk():
+	print("spawning chunk")
 	var edge = get_right_edge()
 	if not generate_chunk(edge):
 		push_error("Chunk generation failed")
 		return
-
-	draw_grid_at_offset(current_chunk + 1)
+	cleanup_chunk(current_chunk - 1)
+	draw_grid_at_offset(current_chunk)
+	#spawn_obstacles_for_chunk(current_chunk + 1)
 	current_chunk += 1
 
 func draw_grid_at_offset(chunk_index: int):
 	var x_offset = chunk_index * GRID_WIDTH
-
+	
 	for y in range(GRID_HEIGHT):
 		for x in range(GRID_WIDTH):
 			if grid[y][x].size() == 1:
