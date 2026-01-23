@@ -1,0 +1,175 @@
+[gd_scene load_steps=14 format=3 uid="uid://44gyi4et5eug"]
+
+[ext_resource type="Script" uid="uid://dayxy5q6heb4l" path="res://Scripts/WFC.gd" id="1_vy5pj"]
+[ext_resource type="Texture2D" uid="uid://cqdigm2mcxkyn" path="res://Assets/Parallax/7 sky1.png" id="2_bmxlf"]
+[ext_resource type="Texture2D" uid="uid://dky7lyd1jk7hm" path="res://Assets/Parallax/5 BG gears1.png" id="3_4kpch"]
+[ext_resource type="Texture2D" uid="uid://clrjsdv57qxgw" path="res://Assets/Parallax/4 mid1.png" id="4_grg3l"]
+[ext_resource type="Texture2D" uid="uid://bc4ho0hef7v4c" path="res://Assets/Parallax/3 close but further1.png" id="5_frkhe"]
+[ext_resource type="Texture2D" uid="uid://dd153hlytlsd2" path="res://Assets/Parallax/2 close again1.png" id="6_1p5hy"]
+[ext_resource type="Texture2D" uid="uid://cgo7dntqix7fu" path="res://Assets/Parallax/1 close1.png" id="7_h1m7h"]
+[ext_resource type="Texture2D" uid="uid://bdw2y4t4e7kxb" path="res://Assets/Parallax/Sprite Sheets/gears-Sheet.png" id="8_erwvk"]
+[ext_resource type="Texture2D" uid="uid://dvps1p2c87oxy" path="res://Assets/Parallax/5- Fog (5).png" id="9_vy5pj"]
+[ext_resource type="PackedScene" uid="uid://sqhyarub2ybi" path="res://Scenes/Player/player.tscn" id="11_4kpch"]
+[ext_resource type="PackedScene" uid="uid://dj5ps8p2476fv" path="res://UI.tscn" id="11_grg3l"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c2ibq"]
+texture = ExtResource("8_erwvk")
+texture_region_size = Vector2i(32, 32)
+6:1/0 = 0
+6:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+2:0/0 = 0
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+3:0/0 = 0
+4:1/0 = 0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+5:0/0 = 0
+4:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+11:0/0 = 0
+12:0/0 = 0
+13:0/0 = 0
+13:1/0 = 0
+13:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+11:1/0 = 0
+11:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+10:1/0 = 0
+10:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+9:1/0 = 0
+9:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+8:1/0 = 0
+8:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+7:1/0 = 0
+7:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+5:1/0 = 0
+5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+14:0/0 = 0
+14:1/0 = 0
+14:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+12:1/0 = 0
+12:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSet" id="TileSet_j4qnp"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 128
+sources/0 = SubResource("TileSetAtlasSource_c2ibq")
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_vy5pj")
+
+[node name="Parallax" type="Node2D" parent="."]
+position = Vector2(576, 384)
+
+[node name="Sky" type="Parallax2D" parent="Parallax"]
+scale = Vector2(2, 2)
+scroll_scale = Vector2(0.1, 1)
+repeat_size = Vector2(576, 1)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/Sky"]
+texture_filter = 1
+rotation = 0.0011376928
+texture = ExtResource("2_bmxlf")
+
+[node name="Far" type="Parallax2D" parent="Parallax"]
+scale = Vector2(2, 2)
+scroll_scale = Vector2(0.2, 1)
+repeat_size = Vector2(576, 0)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/Far"]
+texture_filter = 1
+texture = ExtResource("3_4kpch")
+
+[node name="Mid" type="Parallax2D" parent="Parallax"]
+scale = Vector2(2, 2)
+scroll_scale = Vector2(0.3, 1)
+repeat_size = Vector2(576, 0)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/Mid"]
+texture_filter = 1
+texture = ExtResource("4_grg3l")
+
+[node name="Kinda Close" type="Parallax2D" parent="Parallax"]
+scale = Vector2(2, 2)
+scroll_scale = Vector2(0.5, 1)
+repeat_size = Vector2(576, 0)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/Kinda Close"]
+texture_filter = 1
+texture = ExtResource("5_frkhe")
+
+[node name="Close1" type="Parallax2D" parent="Parallax"]
+scale = Vector2(2, 2)
+scroll_scale = Vector2(0.7, 1)
+repeat_size = Vector2(576, 0)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/Close1"]
+texture_filter = 1
+texture = ExtResource("6_1p5hy")
+
+[node name="Close2" type="Parallax2D" parent="Parallax"]
+scale = Vector2(2, 2)
+scroll_scale = Vector2(0.7, 1)
+repeat_size = Vector2(576, 0)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/Close2"]
+texture_filter = 1
+texture = ExtResource("7_h1m7h")
+
+[node name="Close3" type="Parallax2D" parent="Parallax"]
+scale = Vector2(2, 2)
+scroll_scale = Vector2(0.7, 1)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/Close3"]
+texture_filter = 1
+position = Vector2(0, 77)
+texture = ExtResource("9_vy5pj")
+
+[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+texture_filter = 1
+position = Vector2(387, 576)
+scale = Vector2(3, 3)
+tile_map_data = PackedByteArray(0, 0, 13, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0)
+tile_set = SubResource("TileSet_j4qnp")
+
+[node name="Player" parent="." instance=ExtResource("11_4kpch")]
+position = Vector2(578.61, 538)
+scale = Vector2(0.5, 0.5)
+DEBUG = false
+JUMP_VELOCITY = -399.0
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(21.325, 700)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -18.246
+autoplay = true
+
+[node name="Obstacles2" type="Node2D" parent="."]
+
+[node name="Control" parent="." instance=ExtResource("11_grg3l")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 1152.0
+offset_bottom = 768.0
+grow_horizontal = 1
+grow_vertical = 1
+size_flags_vertical = 4
+
+[connection signal="PlayerDied" from="Player" to="." method="_on_player_player_died"]
+[connection signal="StartButtonPressed" from="Control" to="." method="_on_control_start_button_pressed"]
