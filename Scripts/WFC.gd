@@ -1,19 +1,9 @@
-#region INIT
 extends Node2D
 
 const GRID_WIDTH = 25   
 const GRID_HEIGHT = 2
 
-var all_tiles = base_tiles
-var grid = []
-var history = []
-var last_cells := []
-
-var current_chunk = 0
-var chunk_width = 96 * GRID_WIDTH
-
 @onready var tilemap = $TileMapLayer
-#endregion
 # Socket order: [up, right, down, left]
 #region rules
 #ADD BASE TILE RULES HERE
@@ -286,6 +276,15 @@ var base_tiles = [
 	}
 ]
 #endregion 
+#region INIT
+var all_tiles = base_tiles
+var grid = []
+var history = []
+var last_cells := []
+
+var current_chunk = 0
+var chunk_width = 96 * GRID_WIDTH
+#endregion
 
 func _ready():
 	randomize()
@@ -319,7 +318,6 @@ func draw_grid_at_offset(chunk_index: int):
 			if grid[y][x].size() == 1:
 				var t = grid[y][x][0]
 				tilemap.set_cell(Vector2i((x + x_offset), y), 0, t["atlas"], t["alt"])
-				#tilemap.set_cell(Vector2i(x, y), 0, t["atlas"], t["alt"])
 
 
 func init_chunk_from_edge(left_edge: Array):
