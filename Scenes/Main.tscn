@@ -68,7 +68,7 @@ position = Vector2(576, 384)
 [node name="Sky" type="Parallax2D" parent="Parallax"]
 scale = Vector2(2, 2)
 scroll_scale = Vector2(0.1, 1)
-repeat_size = Vector2(576, 0)
+repeat_size = Vector2(576, 1)
 repeat_times = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax/Sky"]
@@ -133,6 +133,7 @@ repeat_times = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax/Close3"]
 texture_filter = 1
+position = Vector2(0, 77)
 texture = ExtResource("9_vy5pj")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]

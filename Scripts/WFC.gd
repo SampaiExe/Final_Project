@@ -4,9 +4,6 @@ const GRID_WIDTH = 25
 const GRID_HEIGHT = 2
 
 @onready var tilemap = $TileMapLayer
-
-
-
 # Socket order: [up, right, down, left]
 #region rules
 #ADD BASE TILE RULES HERE
@@ -284,6 +281,8 @@ var all_tiles = base_tiles
 var grid = []
 var history = []
 
+var last_cells := []
+
 func _ready():
 	randomize()
 	#all_tiles = gen_tiles(base_tiles)
@@ -291,6 +290,8 @@ func _ready():
 	#propagate_edges()
 	wfc()
 	draw_grid()
+	last_cells[0] = grid[1][24]
+	last_cells[1] = grid[2][24]
 
 func wfc():
 	while not is_fully_collapsed():
