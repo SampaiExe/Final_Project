@@ -5,6 +5,7 @@ signal StartButtonPressed
 func _ready() -> void:
 	$Score.visible = false
 	if Globals.score != 0:
+		$"../AudioStreamPlayer".play()
 		$Score.visible = true
 		$ColorRect.visible = false
 		$TextureButton.visible = false
@@ -31,6 +32,7 @@ func _on_texture_button_button_down() -> void:
 func _on_texture_button_button_up() -> void:
 	
 	if Globals.score == 0:
+		$"../AudioStreamPlayer".play()
 		$Score.visible = true
 		$ColorRect.visible = false
 		$TextureButton.visible = false
