@@ -1,9 +1,19 @@
+#region INIT
 extends Node2D
 
 const GRID_WIDTH = 25   
 const GRID_HEIGHT = 2
 
+var all_tiles = base_tiles
+var grid = []
+var history = []
+var last_cells := []
+
+var current_chunk = 0
+var chunk_width = 96 * GRID_WIDTH
+
 @onready var tilemap = $TileMapLayer
+#endregion
 # Socket order: [up, right, down, left]
 #region rules
 #ADD BASE TILE RULES HERE
@@ -276,16 +286,6 @@ var base_tiles = [
 	}
 ]
 #endregion 
-
-var all_tiles = base_tiles
-var grid = []
-var history = []
-var last_cells := []
-
-var current_chunk = 0
-var chunk_width = 96*GRID_WIDTH
-
-
 
 func _ready():
 	randomize()
