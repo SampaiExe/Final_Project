@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://dj5ps8p2476fv"]
+
+[ext_resource type="Shader" uid="uid://bsgp1vihwxx8t" path="res://Blur.gdshader" id="1_3b2b5"]
+[ext_resource type="Script" uid="uid://cuyi2g8fh8ukx" path="res://Scripts/ui.gd" id="1_g6l6n"]
+[ext_resource type="Texture2D" uid="uid://bfwsydqyxcid1" path="res://Assets/UI - Words2.png" id="2_g6l6n"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qui0h"]
+shader = ExtResource("1_3b2b5")
+shader_parameter/blur_amount = 1.5
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g6l6n")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_qui0h")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureButton" type="TextureButton" parent="."]
+modulate = Color(0.19434929, 0.19434926, 0.19434926, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -46.5
+offset_top = -20.0
+offset_right = 46.5
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("2_g6l6n")
+texture_pressed = ExtResource("2_g6l6n")
+
+[connection signal="button_down" from="TextureButton" to="." method="_on_texture_button_button_down"]
+[connection signal="button_up" from="TextureButton" to="." method="_on_texture_button_button_up"]

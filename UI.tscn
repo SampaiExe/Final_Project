@@ -1,0 +1,81 @@
+[gd_scene load_steps=6 format=3 uid="uid://dj5ps8p2476fv"]
+
+[ext_resource type="Shader" uid="uid://bsgp1vihwxx8t" path="res://Blur.gdshader" id="1_3b2b5"]
+[ext_resource type="Script" uid="uid://cuyi2g8fh8ukx" path="res://Scripts/ui.gd" id="1_g6l6n"]
+[ext_resource type="Texture2D" uid="uid://bfwsydqyxcid1" path="res://Assets/UI - Words2.png" id="2_g6l6n"]
+[ext_resource type="FontFile" uid="uid://cv638a7ogxnh4" path="res://Assets/AGENCYB.TTF" id="4_qui0h"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qui0h"]
+shader = ExtResource("1_3b2b5")
+shader_parameter/blur_amount = 1.5
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g6l6n")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_qui0h")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureButton" type="TextureButton" parent="."]
+modulate = Color(0.5686275, 0.5686275, 0.5686275, 1)
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -46.5
+offset_top = -16.5
+offset_right = 46.5
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(5, 5)
+pivot_offset = Vector2(50, 16)
+texture_normal = ExtResource("2_g6l6n")
+texture_pressed = ExtResource("2_g6l6n")
+
+[node name="Score" type="Label" parent="."]
+modulate = Color(0.54509807, 0.54509807, 0.54509807, 1)
+texture_filter = 1
+layout_mode = 0
+offset_left = 10.0
+offset_right = 1158.0
+offset_bottom = 153.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_fonts/font = ExtResource("4_qui0h")
+theme_override_font_sizes/font_size = 32
+text = "SCORE: 1234657989754616"
+
+[node name="Highscore" type="RichTextLabel" parent="."]
+modulate = Color(0.54509807, 0.54509807, 0.54509807, 1)
+texture_filter = 1
+layout_mode = 0
+offset_top = 499.0
+offset_right = 1152.0
+offset_bottom = 652.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 32
+theme_override_font_sizes/bold_font_size = 32
+theme_override_font_sizes/bold_italics_font_size = 32
+theme_override_font_sizes/italics_font_size = 32
+theme_override_font_sizes/mono_font_size = 32
+bbcode_enabled = true
+text = "[center][wave amp=18 freq=3]HIGHSCORE: \"+str(score)+\"    [/wave][/center]"
+
+[connection signal="button_down" from="TextureButton" to="." method="_on_texture_button_button_down"]
+[connection signal="button_up" from="TextureButton" to="." method="_on_texture_button_button_up"]
